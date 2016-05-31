@@ -486,6 +486,9 @@ function lang($phrase){
 'MAIL_text' => 'Текст',
 't_LIST_worker_to' => 'сотруднику',
 't_LIST_person' => 'персонально',
+'MAIL_updated' => 'ЗАЯВКА ОБНОВЛЕНА',
+'MAIL_author' => 'Пользователь',
+'MAIL_comment' => 'Комментарий',
 
 'HELP_title' => 'Инструкция по работе с заявками',
 'HELP_new' => 'Создание заявки',
