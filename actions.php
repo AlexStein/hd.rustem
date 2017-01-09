@@ -21,8 +21,6 @@ if ( isset($_POST['mode']) ) {
         $mailadr=($_POST['mailadress']);
         
         
-        //$query="SELECT id, fio,login,status FROM users where email='$mailadr';";
-        //$res = mysql_query($query) or die(mysql_error());
 
 		$stmt = $dbConnection->prepare('SELECT id, fio,login,status FROM users where email=:mailadr');
         $stmt->execute(array(':mailadr' => $mailadr));
@@ -1760,7 +1758,6 @@ foreach ($ee as $key=>$value) { $vv[":val_" . $key]=$value;}
         update_val_by_key("mail_username", $_POST['username']);
 		update_val_by_key("mail_password", $_POST['password']);
 		update_val_by_key("mail_from", $_POST['from']);
-		//update_val_by_key("mail_debug", $_POST['debug']);
 
         
         
@@ -2810,14 +2807,12 @@ if ($mode == "edit_user") {
             $fio=($_POST['fio']);
             $login=($_POST['login']);
             $pass=md5(($_POST['pass']));
-//$unit[]=$_POST['unit'];
             $priv=($_POST['priv']);
             $mail=($_POST['mail']);
             $mess=($_POST['mess']);
             $lang=($_POST['lang']);
             $hidden=array();
             $hidden = ($_POST['unit']);
-            //print_r($hidden);
             $unit=($_POST['unit']);
 			
 			$priv_add_client=$_POST['priv_add_client'];
@@ -2930,7 +2925,6 @@ values (:edit_msg, now(), :unow, :pk)');
 
             $user_comment=($_POST['user']);
             $tid_comment=($_POST['tid']);
-            //$text_comment=strip_tags(xss_clean(($_POST['textmsg'])),"<b><a><br>");
 			$text_comment=$_POST['textmsg'];
 
 
@@ -2951,6 +2945,10 @@ values (:comment, now(), :user_comment, :tid_comment)');
             $stmt = $dbConnection->prepare('update tickets set last_update=now() where id=:tid_comment');
             $stmt->execute(array(':tid_comment'=>$tid_comment));
 
+            // Отправляем оповещение ВСЕМ
+            if ($CONF_MAIL['active'] == "true") {
+                send_mail_to('comment_all',$tid_comment);
+            }
 
             view_comment($tid_comment);
         }
@@ -2972,18 +2970,6 @@ values (:comment, now(), :user_comment, :tid_comment)');
         if ($mode == "conf_test_mail") {
 			
 			
-/*
-
-if (get_conf_param('mail_auth_type') != "none") 
-	{	
-		$mail->SMTPSecure = $CONF_MAIL['auth_type'];
-	}
-
-
-sendmail?
-SMTP?
-
-*/			
 if (get_conf_param('mail_type') == "sendmail") {
 	$mail = new PHPMailer(true);
 	$mail->IsSendmail(); // telling the class to use SendMail transport
@@ -3079,7 +3065,7 @@ $mail->Password   = $CONF_MAIL['password'];
 Например SMS-информирование, подключать API и тд и тп
 Доступны переменные:
 $user_init_id	ID-пользователя, который создал заявку
-$user_to_id		ID-пользователя, которому назначена заявку
+$user_to_id	ID-пользователя, которому назначена заявка
 $subj			Тема заявки
 $msg			Сообщение
 $unit_id		ID-подразделения, на которое назначена заявка
@@ -3204,18 +3190,14 @@ if ($CONF_MAIL['active'] == "true") {
                 $stmt->execute(array(':create'=>'create', ':unow'=>$unow,':max_id_res_ticket'=>$max_id_res_ticket,':user_to_id'=>$user_to_id,':unit_id'=>$unit_id));
 
 
-//echo("dd");
 if ($CONF_MAIL['active'] == "true") {
                 if ($user_to_id == "0") {
-                //echo("dd");
                     send_mail_to('new_all',$max_id_res_ticket);
                     
                 }
 
                 else if ($user_to_id <> "0") {
-                //echo("dd");
                     send_mail_to('new_user',$max_id_res_ticket);
-                    //echo("dd");
                     send_mail_to('new_coord',$max_id_res_ticket);
                     
                 }

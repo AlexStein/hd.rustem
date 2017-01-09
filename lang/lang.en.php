@@ -493,6 +493,9 @@ function lang ($phrase) {
 ,'MAIL_text' => 'text' 
 ,'t_LIST_worker_to' => 'employee' 
 ,'t_LIST_person' => 'personal' 
+,'MAIL_updated' => 'ORDER UPDATED'
+,'MAIL_author' => 'User'
+,'MAIL_comment' => 'Comment'
 
 ,'HELP_title' => 'How to work with the Tickets' 
 ,'HELP_new' => 'Create Ticket' 

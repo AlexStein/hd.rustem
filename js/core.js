@@ -510,18 +510,6 @@ if ( $('select#mail_type').val() == "sendmail" ){
     });
 
 
-/*
-    $("textarea#msg").blur(function() {
-        if($(this).val().length > 1) {
-            $("textarea#msg").popover('hide');
-            $("#for_msg").removeClass('has-error').addClass('has-success');
-
-        } else {
-            $("textarea#msg").popover('show');
-            $("#for_msg").addClass('has-error');
-        }
-    });
-*/
     $("textarea#msg").keyup(function() {
         if($(this).val().length > 1) {
             $("textarea#msg").popover('hide');
@@ -693,7 +681,6 @@ makemytime(true);
     
 
 
-//alert(window.location);
 
 
     $.noty.defaults = {
@@ -3239,13 +3226,6 @@ $(this).removeClass('fileupload-processing');
     }).on('fileuploadstop', function(e, data) {
 
 
-        	/*if (check_form_ticket() == 0 ) {
-     enter_ticket();
-     }
-     
-     */
-     
-	    //enter_ticket();
     }).on('fileuploadadd', function (e, data) {/* ... 
     $("#uploadBtn").on('click',function () {
                 data.submit();
@@ -3256,8 +3236,7 @@ $(this).removeClass('fileupload-processing');
     
 }).on('fileuploadsubmit', function (e, data) { 
 		console.log(data);
-		})
-		;
+		    });
     }
 
 //$('.start').hide();
@@ -3266,10 +3245,8 @@ $(this).removeClass('fileupload-processing');
         event.preventDefault();
         	if (check_form_ticket_client() == 0 ) {
      enter_ticket_client();
-     //console.log('ok');
      }
-        }
-        );
+    });
 
     $('body').on('click', 'button#enter_ticket', function(event) {
         event.preventDefault();
@@ -3285,7 +3262,6 @@ $(this).removeClass('fileupload-processing');
      enter_ticket();
      }
 
-//console.log($("#users_do").val());
 
 
 

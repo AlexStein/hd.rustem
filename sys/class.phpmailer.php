@@ -69,13 +69,13 @@ class PHPMailer
      * The From email address for the message.
      * @type string
      */
-    public $From = 'root@localhost';
+    public $From = 'support@softmine.ru';
 
     /**
      * The From name of the message.
      * @type string
      */
-    public $FromName = 'Root User';
+    public $FromName = 'Softmine Support Team';
 
     /**
      * The Sender email (Return-Path) of the message.
@@ -194,7 +194,7 @@ class PHPMailer
      * by SERVER_NAME is used or 'localhost.localdomain'.
      * @type string
      */
-    public $Hostname = '';
+    public $Hostname = 'softmine.ru';
 
     /**
      * An ID to be used in the Message-Id header.

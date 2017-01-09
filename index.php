@@ -80,7 +80,15 @@ if (isset($_POST['login']) && isset($_POST['password']))
 if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
 $url = parse_url($CONF['hostname']);
 
-    if ($rq==1) { header("Location: http://".$url['host'].$req_url);}
+    if ($rq==1) { 
+		if (isset($url['port'])) {
+			header("Location: http://".$url['host'].":".$url['port'].$req_url);
+		} 
+		else {
+			header("Location: http://".$url['host'].$req_url);
+		}
+	}
+
     if ($rq==0) {
     
     
