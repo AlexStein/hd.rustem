@@ -340,11 +340,53 @@ if ($CONF['fix_subj'] == "false") {
         </div>
         <div class="help-block"></div></div></div>
        
-       
-       
-       
-       
-       
+<?php if ($CONF['file_uploads'] == "true") { ?>
+
+<div class="control-group">
+    <div class="controls">
+    <div class="form-group">
+    
+    <label for="" class="col-sm-2 control-label"><small><?=lang('TICKET_file_add');?>:</small></label>
+
+    <div class="col-sm-10">
+
+ <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
+        <div class="fileupload-buttonbar">
+            <div class="">
+                <!-- The fileinput-button span is used to style the file input field as button -->
+                <span class="btn btn-success fileinput-button btn-xs">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span><?=lang('TICKET_file_upload')?></span>
+                    <input id="filer" type="file" name="files[]" multiple>
+                </span>
+                
+                <!--button data-toggle="popover" data-html="true" data-trigger="manual" data-placement="top" data-content="<small><?=lang('upload_not_u')?></small>" type="submit" class="btn btn-primary start btn-xs" id="start_upload">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span><?=lang('TICKET_file_startupload');?></span>
+                </button>
+                <button type="reset" class="btn btn-warning cancel btn-xs">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span><?=lang('TICKET_file_notupload')?></span>
+                </button--><br>
+               <small class="text-muted"><?=lang('TICKET_file_upload_msg');?></small>
+                <!-- The global file processing state -->
+                
+                
+                
+                <span class="fileupload-process"></span>
+            </div>
+
+        </div>
+        <!-- The table listing the files available for upload/download -->
+        <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+    </form>
+
+</div>
+    </div>
+    </div>
+</div>
+
+<?php } ?>
        </form> 
         
       </div>
