@@ -6,23 +6,14 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
 if ($_SESSION['helpdesk_user_id']) {
    include("head.inc.php");
    include("navbar.inc.php");
-   
-  
-//check_unlinked_file();
-
 ?>
 
-
-
 <div class="container" id="form_add">
-<input type="hidden" id="main_last_new_ticket" value="<?=get_last_ticket_new($_SESSION['helpdesk_user_id']);?>">
-
-
-<div class="row" style="padding-bottom:20px;">
-
-    <div class="col-md-8"> <center><h3><i class="fa fa-tag"></i> <?=lang('NEW_title');?></h3></center></div>
-
-
+   <input type="hidden" id="main_last_new_ticket" value="<?=get_last_ticket_new($_SESSION['helpdesk_user_id']);?>">
+   <div class="row" style="padding-bottom:20px;">
+   <div class="col-md-8">
+   <center><h3><i class="fa fa-tag"></i> <?=lang('NEW_title');?></h3></center>
+   </div>
 </div>
 
 <div class="row" style="padding-bottom:20px;">

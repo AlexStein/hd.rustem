@@ -20,8 +20,7 @@ function send_mail($to,$subj,$msg) {
         $mail->MsgHTML($msg);
         $mail->Send();
 
-    }
-    else if (get_conf_param('mail_type') == "SMTP") {
+    } else if (get_conf_param('mail_type') == "SMTP") {
         $mail = new PHPMailer();
         $mail->CharSet 	  = 'UTF-8';
         $mail->IsSMTP();
@@ -105,6 +104,7 @@ font-size: 12px;">{$pass}</td>
 EOBODY;
     send_mail($to,$subject,$message);
 }
+
 function mailtoactivate_admin($login, $mail, $pass) {
     global $CONF, $CONF_MAIL, $dbConnection;
     $MAIL_cong=lang('MAIL_cong');
@@ -161,6 +161,7 @@ EOBODY;
 
     send_mail($to,$subject,$message);
 }
+
 function send_mail_to($type,$tid) {
     global $CONF, $CONF_MAIL, $dbConnection;
 
@@ -191,10 +192,7 @@ function send_mail_to($type,$tid) {
     'Reply-To: '.$CONF_MAIL['from'] . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
 
-
-
-
-
+    // Оповещение о новой заявке
     if ($type == "new_all") {
 
 
@@ -457,6 +455,7 @@ EOBODY;
             }
         }
     }
+
     if ($type == "new_user") {
 
         $stmt = $dbConnection->prepare('SELECT user_init_id,user_to_id,date_create,subj,msg, client_id, unit_id, status, hash_name, prio,last_update FROM tickets where id=:tid');
@@ -704,7 +703,7 @@ EOBODY;
     <td style="border: 1px solid #ddd;font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;">{$MAIL_text}:</td>
     <td style="border: 1px solid #ddd;font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;">{$comment_text}</td>
+	font-size: 12px;"><pre>{$comment_text}</pre></td>
   </tr>
   <tr>
     <td colspan="2">&nbsp;</td>

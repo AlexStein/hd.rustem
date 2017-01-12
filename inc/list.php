@@ -62,7 +62,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
     }
 
 
-    $newt = get_total_tickets_free();
+    $newt = get_total_tickets_free('');
 
     if ($newt != 0) {
         $newtickets = "(" . $newt . ")";
@@ -70,7 +70,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
     if ($newt == 0) {
         $newtickets = "";
     }
-    $outt = get_total_tickets_out_and_success();
+    $outt = get_total_tickets_out_and_success('');
     if ($outt != 0) {
         $out_tickets = "(" . $outt . ")";
     }

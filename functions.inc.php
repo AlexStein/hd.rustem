@@ -104,12 +104,10 @@ function get_conf_param($in) {
     $stmt->execute(array(':in' => $in));
     $fio = $stmt->fetch(PDO::FETCH_ASSOC);
 
-return $fio['value'];
-
+    return $fio['value'];
 }
 
-
-    $fio_user=$fio['fio'];
+// $fio_user=$fio['fio'];
 
 function generateRandomString($length = 5) {
     $characters = '0123456789';
@@ -159,10 +157,10 @@ function validate_alphanumeric_underscore($str)
 
 function update_val_by_key($key,$val) {
     global $dbConnection;
-$stmt = $dbConnection->prepare('update perf set value=:value where param=:param');
-$stmt->execute(array(':value' => $val,':param' => $key));
+    $stmt = $dbConnection->prepare('update perf set value=:value where param=:param');
+    $stmt->execute(array(':value' => $val,':param' => $key));
 
-return true;
+    return true;
 }
 
 function randomPassword() {
@@ -238,13 +236,8 @@ function get_file_icon($in) {
     $stmt->execute(array(':file_hash' => $in));
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $ftype=$row['file_type'];
-    
-    
+
     switch($ftype) {
-
-
-    
-    
     case 'application/pdf': $icon="<i class=\"fa fa-file-pdf-o\"></i>";	break;
     case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': $icon="<i class=\"fa fa-file-word-o\"></i>";	break;
     case 'application/msword': $icon="<i class=\"fa fa-file-word-o\"></i> ";	break;
@@ -257,13 +250,12 @@ function get_file_icon($in) {
     case 'image/jpg': $icon="<i class=\"fa fa-file-image-o\"></i>";	break;
     case 'image/gif': $icon="<i class=\"fa fa-file-image-o\"></i>";	break;
     case 'image/png': $icon="<i class=\"fa fa-file-image-o\"></i>";	break;
-    
-		default: $icon="<i class=\"fa fa-file\"></i>";
+
+    default: $icon="<i class=\"fa fa-file\"></i>";
     }
-	
+
 	return $icon;
 }
-
 
 function validate_admin($user_id) {
     global $dbConnection;
@@ -279,33 +271,20 @@ function validate_admin($user_id) {
 }
 
 function view_log($tid) {
-global $dbConnection;
+    global $dbConnection;
 
-                        $stmt = $dbConnection->prepare('SELECT msg,
+    $stmt = $dbConnection->prepare('SELECT msg,
 							date_op, init_user_id, to_user_id, to_unit_id from ticket_log where
 							ticket_id=:tid order by date_op DESC');
-                        $stmt->execute(array(':tid'=>$tid));
-                        $re = $stmt->fetchAll();
-
-
-
-
-
+    $stmt->execute(array(':tid'=>$tid));
+    $re = $stmt->fetchAll();
 
                         if(!empty($re)) {
-
-
-
-
-
-
                             ?>
 
                             <div class="col-md-12" style=" padding-left: 0px; padding-right: 0px; ">
-
-
-                                <div class="panel panel-default">
-                                    <div class="panel-body" style="max-height: 400px; scroll-behavior: initial; overflow-y: scroll;">
+                              <div class="panel panel-default">
+                                <div class="panel-body" style="max-height: 400px; scroll-behavior: initial; overflow-y: scroll;">
 
                                         <table class="table table-hover">
                                             <thead>
@@ -1586,23 +1565,24 @@ function get_total_tickets_ok($in) {
 
     return $count[0];
 }
+
 function get_total_tickets_out_and_success($in) {
-
-
-
-
 
     global $dbConnection;
 
-        if (empty($in)) {$uid=$_SESSION['helpdesk_user_id'];}
-    else if (!empty($in)) {$uid=$in;}
+    if (empty($in)) {
+        $uid=$_SESSION['helpdesk_user_id'];
+    }
+    else if (!empty($in)) {
+        $uid=$in;
+    }
     $res = $dbConnection->prepare("SELECT count(*) from tickets where user_init_id=:uid and (ok_by='0') and arch='0'");
     $res->execute(array(':uid' => $uid));
     $count = $res->fetch(PDO::FETCH_NUM);
 
-
     return $count[0];
 }
+
 function get_total_tickets_out_and_lock() {
     global $dbConnection;
     $uid=$_SESSION['helpdesk_user_id'];

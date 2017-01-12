@@ -14,7 +14,7 @@ function echoActiveClassIfRequestMatches($requestUri)
 }
 
 
-$newt=get_total_tickets_free();
+$newt=get_total_tickets_free('');
 
 if ($newt != 0) {
 	$newtickets="<span class=\"badge\">".$newt."</span>";

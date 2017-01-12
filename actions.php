@@ -19,19 +19,13 @@ if ( isset($_POST['mode']) ) {
 
     if ($mode == "activate_login") {
         $mailadr=($_POST['mailadress']);
-        
-        
 
 		$stmt = $dbConnection->prepare('SELECT id, fio,login,status FROM users where email=:mailadr');
         $stmt->execute(array(':mailadr' => $mailadr));
         $r = $stmt->fetchAll();
-            
+
         if (!empty($r)) {
 
-                //foreach($res as $row) {
-        //if(mysql_num_rows($res)>0) {
-
-            //$r= mysql_fetch_assoc( $res );
 
             if ($r['status'] == "0") {
 
@@ -113,21 +107,8 @@ if ( isset($_POST['mode']) ) {
         <br>
         <button id="do_activate" type="submit" class="btn btn-lg btn-success btn-block"> <i class="fa fa-check-circle-o"></i>  <?=lang('action_auth');?></button>
 
-
-
-
-
-
     <?php
     }
-
-
-
-
-
-
-
-
 
     if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
 
@@ -285,37 +266,22 @@ $r['p']=$row['id'];
   <button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
   ".lang('TICKET_error_msg')."
 </div>";
-	    
-	    
     }
-    
-    
-    
-    
-    
+
     $row_set[] = $r;
 	echo json_encode($row_set);
 }
-
-
         if ($mode == "get_client_from_new_t") {
             if (isset($_POST['get_client_info'])) {
 
                 $client_id=($_POST['get_client_info']);
-
-
-
                 get_client_info($client_id);
-
-
-
             }
             if (isset($_POST['new_client_info'])) {
                 $fio=($_POST['new_client_info']);
                 $u_l=($_POST['new_client_login']);
-                
-                ?>
 
+                ?>
 
                 <div id="" class="alert alert-warning alert-dismissable" style="padding: 5px; margin-bottom: 10px;">
                     <button style="right: 0px;" type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -377,10 +343,6 @@ $r['p']=$row['id'];
             }
 
         }
-
-
-
-
 
         if ($mode == "get_unit_id") {
             $uid=($_POST['uid']);
@@ -478,11 +440,9 @@ $r['p']=$row['id'];
                 $u=explode(",",$row['unit']);
 
                 if (in_array($idzz, $u)) {
-                
-                
                 if (get_user_status_text($ud) == "online") {$s="status-online-icon";}
 				else if (get_user_status_text($ud) == "offline") {$s="status-offline-icon";}
-                
+
                     $results[] = array(
                         'name' => nameshort($un),
                         'stat' =>$s,
@@ -810,13 +770,7 @@ $r['p']=$row['id'];
             <?php
             }
             else if(!empty($result)) {
-            
-            
-            
-            
                 foreach($result as $row) 
-                
-                
                 {
                     $unit2id = explode(",", $row['unit_to_id']);
 
@@ -959,9 +913,9 @@ foreach ($ee as $key=>$value) { $vv[":val_" . $key]=$value;}
 							(user_to_id=:n1 and unit_id IN ('.$in_query.') and arch=:n2))
 							order by ok_by asc, prio desc, id desc
 							limit :start_pos, :perpage');
-							
+
                 $paramss=array(':n' => '0',':start_pos'=>$start_pos, ':perpage'=>$perpage, ':user_id'=>$user_id,':n1' => '0',':n2' => '0');
-                
+
                 $stmt->execute(array_merge($vv,$paramss));
                 $results = $stmt->fetchAll();
 
@@ -1277,10 +1231,10 @@ else if ($pt == "out") {
 
             $units = explode(",", $unit_user);
             $units = implode("', '", $units);
-$ee=explode(",", $unit_user);
-foreach($ee as $key=>$value) {$in_query = $in_query . ' :val_' . $key . ', '; }
-$in_query = substr($in_query, 0, -2);
-foreach ($ee as $key=>$value) { $vv[":val_" . $key]=$value;}
+            $ee=explode(",", $unit_user);
+            foreach($ee as $key=>$value) {$in_query = $in_query . ' :val_' . $key . ', '; }
+            $in_query = substr($in_query, 0, -2);
+            foreach ($ee as $key=>$value) { $vv[":val_" . $key]=$value;}
 
             if ($priv_val == "0") {
 
@@ -2968,68 +2922,56 @@ values (:comment, now(), :user_comment, :tid_comment)');
 
         }
         if ($mode == "conf_test_mail") {
-			
-			
-if (get_conf_param('mail_type') == "sendmail") {
-	$mail = new PHPMailer(true);
-	$mail->IsSendmail(); // telling the class to use SendMail transport
 
-try {
-  $mail->AddReplyTo($CONF_MAIL['from'], $CONF['name_of_firm']);
-  $mail->AddAddress($CONF['mail'], 'admin helpdesk');
-  $mail->SetFrom($CONF_MAIL['from'], $CONF['name_of_firm']);
-  $mail->Subject = 'test message';
-  $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
-  $mail->MsgHTML('Test message via sendmail');
-  $mail->Send();
-  echo "Message Sent OK<p></p>\n";
-} catch (phpmailerException $e) {
-  echo $e->errorMessage(); //Pretty error messages from PHPMailer
-} catch (Exception $e) {
-  echo $e->getMessage(); //Boring error messages from anything else!
-}
-}
-else if (get_conf_param('mail_type') == "SMTP") {
-	
-	
-	$mail = new PHPMailer(true); // the true param means it will throw exceptions on errors, which we need to catch
+            if (get_conf_param('mail_type') == "sendmail") {
+                $mail = new PHPMailer(true);
+                $mail->IsSendmail(); // telling the class to use SendMail transport
 
-$mail->IsSMTP(); // telling the class to use SMTP
+                try {
+                    $mail->AddReplyTo($CONF_MAIL['from'], $CONF['name_of_firm']);
+                    $mail->AddAddress($CONF['mail'], 'admin helpdesk');
+                    $mail->SetFrom($CONF_MAIL['from'], $CONF['name_of_firm']);
+                    $mail->Subject = 'test message';
+                    $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
+                    $mail->MsgHTML('Test message via sendmail');
+                    $mail->Send();
+                    echo "Message Sent OK<p></p>\n";
+                } catch (phpmailerException $e) {
+                    echo $e->errorMessage(); //Pretty error messages from PHPMailer
+                } catch (Exception $e) {
+                    echo $e->getMessage(); //Boring error messages from anything else!
+                }
+            }
+            else if (get_conf_param('mail_type') == "SMTP") {
 
-try {
-  $mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
-  $mail->SMTPAuth   = $CONF_MAIL['auth'];                  // enable SMTP authentication
-if (get_conf_param('mail_auth_type') != "none") 
-	{	
-		$mail->SMTPSecure = $CONF_MAIL['auth_type'];
-	}
-$mail->Host       = $CONF_MAIL['host']; 
-$mail->Port       = $CONF_MAIL['port'];                  
-$mail->Username   = $CONF_MAIL['username'];
-$mail->Password   = $CONF_MAIL['password'];   
+                $mail = new PHPMailer(true); // the true param means it will throw exceptions on errors, which we need to catch
+                $mail->IsSMTP(); // telling the class to use SMTP
 
-
-  $mail->AddReplyTo($CONF_MAIL['from'], $CONF['name_of_firm']);
-  $mail->AddAddress($CONF['mail'], 'admin helpdesk');
-  $mail->SetFrom($CONF_MAIL['from'], $CONF['name_of_firm']);
-  $mail->Subject = 'test message via smtp';
-  $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
-  $mail->MsgHTML("test message");
-  $mail->Send();
-  echo "Message Sent OK<p></p>\n";
-} catch (phpmailerException $e) {
-  echo $e->errorMessage(); //Pretty error messages from PHPMailer
-} catch (Exception $e) {
-  echo $e->getMessage(); //Boring error messages from anything else!
-}
-
-	
-	
-}			
-			
-
-
-        
+                try {
+                    $mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
+                    $mail->SMTPAuth   = $CONF_MAIL['auth'];    // enable SMTP authentication
+                    if (get_conf_param('mail_auth_type') != "none")
+                    {
+                        $mail->SMTPSecure = $CONF_MAIL['auth_type'];
+                    }
+                    $mail->Host       = $CONF_MAIL['host'];
+                    $mail->Port       = $CONF_MAIL['port'];
+                    $mail->Username   = $CONF_MAIL['username'];
+                    $mail->Password   = $CONF_MAIL['password'];
+                    $mail->AddReplyTo($CONF_MAIL['from'], $CONF['name_of_firm']);
+                    $mail->AddAddress($CONF['mail'], 'admin helpdesk');
+                    $mail->SetFrom($CONF_MAIL['from'], $CONF['name_of_firm']);
+                    $mail->Subject = 'test message via smtp';
+                    $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
+                    $mail->MsgHTML("test message");
+                    $mail->Send();
+                    echo "Message Sent OK<p></p>\n";
+                } catch (phpmailerException $e) {
+                    echo $e->errorMessage(); //Pretty error messages from PHPMailer
+                } catch (Exception $e) {
+                    echo $e->getMessage(); //Boring error messages from anything else!
+                }
+            }
         }
         if ($mode == "add_ticket") {
             $type=($_POST['type_add']);
@@ -3079,12 +3021,7 @@ $client_mail	Почта клиента
 $client_posada	Должность клиента
 */
 
-
-
-
             if ($type == "add") {
-
-
 
                 $stmt = $dbConnection->prepare("SELECT MAX(id) max_id FROM clients");
                 $stmt->execute();
@@ -3093,11 +3030,8 @@ $client_posada	Должность клиента
                 $max_id=$max[0]+1;
                 $hashname=($_POST['hashname']);
 
-
-
-
-                $stmt = $dbConnection->prepare('insert into clients 
-			 (id, fio, tel, login, unit_desc, adr, email, posada) VALUES 		
+                $stmt = $dbConnection->prepare('insert into clients
+			 (id, fio, tel, login, unit_desc, adr, email, posada) VALUES
 			 (:max_id, :client_fio, :client_tel, :client_login, :unit_desc, :client_adr,  :client_mail, :client_posada)');
 
                 $stmt->execute(array(
@@ -3110,45 +3044,28 @@ $client_posada	Должность клиента
                     ':client_mail'=>$client_mail,
                     ':client_posada'=>$client_posada));
 
-
-
-
                 $stmt = $dbConnection->prepare("SELECT MAX(id) max_id FROM tickets");
                 $stmt->execute();
                 $max_id_ticket = $stmt->fetch(PDO::FETCH_NUM);
 
-
                 $max_id_res_ticket=$max_id_ticket[0]+1;
-
-
-
                 $stmt = $dbConnection->prepare('INSERT INTO tickets
 								(id, user_init_id,user_to_id,date_create,subj,msg, client_id, unit_id, status, hash_name, prio, last_update) VALUES (:max_id_res_ticket, :user_init_id, :user_to_id, now(),:subj, :msg,:max_id,:unit_id, :status, :hashname, :prio, now())');
                 $stmt->execute(array(':max_id_res_ticket'=>$max_id_res_ticket,':user_init_id'=>$user_init_id,':user_to_id'=>$user_to_id,':subj'=>$subj,':msg'=>$msg,':max_id'=>$max_id,':unit_id'=>$unit_id,':status'=>$status,':hashname'=>$hashname,':prio'=>$prio));
 
-
-
-
-
-
-
-
                 $stmt = $dbConnection->prepare('INSERT INTO ticket_log (msg, date_op, init_user_id, ticket_id, to_user_id, to_unit_id) values (:create, now(), :unow, :max_id_res_ticket, :user_to_id, :unit_id)');
-
                 $stmt->execute(array(':create'=>'create', ':unow'=>$unow,':max_id_res_ticket'=>$max_id_res_ticket,':user_to_id'=>$user_to_id,':unit_id'=>$unit_id));
 
-
-if ($CONF_MAIL['active'] == "true") {
-                if ($user_to_id == "0") {
-                    send_mail_to('new_all',$max_id_res_ticket);
+                if ($CONF_MAIL['active'] == "true") {
+                    if ($user_to_id == "0") {
+                        send_mail_to('new_all',$max_id_res_ticket);
+                    }
+                else
+                    if ($user_to_id <> "0") {
+                        send_mail_to('new_user',$max_id_res_ticket);
+                        send_mail_to('new_coord',$max_id_res_ticket);
+                    }
                 }
-
-                else if ($user_to_id <> "0") {
-                    send_mail_to('new_user',$max_id_res_ticket);
-                    send_mail_to('new_coord',$max_id_res_ticket);
-                }
-                }
-
 
                 echo($hashname);
             }
@@ -3160,57 +3077,35 @@ if ($CONF_MAIL['active'] == "true") {
 
                 $stmt->execute(array(':client_tel'=>$client_tel, ':client_login'=>$client_login, ':unit_desc'=>$unit_desc, ':client_adr'=>$client_adr, ':client_mail'=>$client_mail, ':client_posada'=>$client_posada, ':client_id_param'=>$client_id_param));
 
-
-
-
-
-
                 $stmt = $dbConnection->prepare("SELECT MAX(id) max_id FROM tickets");
                 $stmt->execute();
                 $max_id_ticket = $stmt->fetch(PDO::FETCH_NUM);
-
-
                 $max_id_res_ticket=$max_id_ticket[0]+1;
 
-
-
-
                 $stmt = $dbConnection->prepare('INSERT INTO tickets
-								(id, user_init_id,user_to_id,date_create,subj,msg, client_id, unit_id, status, hash_name, prio, last_update) VALUES (:max_id_res_ticket, :user_init_id, :user_to_id, now(),:subj, :msg,:max_id,:unit_id, :status, :hashname, :prio, now())');
+								(id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, prio, ok_date, last_update) VALUES (:max_id_res_ticket, :user_init_id, :user_to_id, now(),:subj, :msg,:max_id,:unit_id, :status, :hashname, :prio, now(), now())');
                 $stmt->execute(array(':max_id_res_ticket'=>$max_id_res_ticket,':user_init_id'=>$user_init_id,':user_to_id'=>$user_to_id,':subj'=>$subj,':msg'=>$msg,':max_id'=>$client_id_param,':unit_id'=>$unit_id,':status'=>$status,':hashname'=>$hashname,':prio'=>$prio));
-
 
                 $unow=$_SESSION['helpdesk_user_id'];
 
-
-
-
                 $stmt = $dbConnection->prepare('INSERT INTO ticket_log (msg, date_op, init_user_id, ticket_id, to_user_id, to_unit_id) values (:create, now(), :unow, :max_id_res_ticket, :user_to_id, :unit_id)');
-
                 $stmt->execute(array(':create'=>'create', ':unow'=>$unow,':max_id_res_ticket'=>$max_id_res_ticket,':user_to_id'=>$user_to_id,':unit_id'=>$unit_id));
 
-
-if ($CONF_MAIL['active'] == "true") {
-                if ($user_to_id == "0") {
-                    send_mail_to('new_all',$max_id_res_ticket);
-                    
-                }
-
-                else if ($user_to_id <> "0") {
-                    send_mail_to('new_user',$max_id_res_ticket);
-                    send_mail_to('new_coord',$max_id_res_ticket);
-                    
-                }
+                if ($CONF_MAIL['active'] == "true") {
+                    if ($user_to_id == "0") {
+                        send_mail_to('new_all',$max_id_res_ticket);
+                    }
+                else
+                    if ($user_to_id <> "0") {
+                        send_mail_to('new_user',$max_id_res_ticket);
+                        send_mail_to('new_coord',$max_id_res_ticket);
+                    }
                 }
                 echo($hashname);
             }
 
-check_unlinked_file();
-
-
-
+            check_unlinked_file();
         }
-
     }
 }
 ?>
