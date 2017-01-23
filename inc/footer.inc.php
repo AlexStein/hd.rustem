@@ -13,10 +13,8 @@
         <div class="col-md-4">
 
         </div>
-
     </div>
 </div>
-
 <?php if ($lang == "ua") {$lang = "uk"; }?>
 <script type="text/javascript">
     var MyHOSTNAME = "<?php echo $CONF['hostname']; ?>";
