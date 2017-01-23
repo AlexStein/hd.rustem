@@ -3,27 +3,22 @@ session_start();
 include("../functions.inc.php");
 
 if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
-if (validate_admin($_SESSION['helpdesk_user_id'])) {
-   include("head.inc.php");
-   include("navbar.inc.php");
-   
-  
-
+    if (validate_admin($_SESSION['helpdesk_user_id'])) {
+        include("head.inc.php");
+        include("navbar.inc.php");
 ?>
-
-
 <div class="container">
-<input type="hidden" id="main_last_new_ticket" value="<?=get_last_ticket_new($_SESSION['helpdesk_user_id']);?>">
-<div class="page-header" style="margin-top: -15px;">
-<div class="row">
-         <div class="col-md-6"> <h3><i class="fa fa-files-o"></i> <?=lang('FILES_title');?></h3></div><div class="col-md-6"> 
+    <input type="hidden" id="main_last_new_ticket" value="<?=get_last_ticket_new($_SESSION['helpdesk_user_id']);?>">
+    <div class="page-header" style="margin-top: -15px;">
+        <div class="row">
+            <div class="col-md-6"> <h3><i class="fa fa-files-o"></i> <?=lang('FILES_title');?></h3>
+            </div>
+            <div class="col-md-6"> 
+            </div>
          
-</div>
-         
-</div>
- </div>
+        </div>
+    </div>
         
-
 <div class="row" >
 <div class="col-md-3">
 
@@ -48,19 +43,10 @@ if (validate_admin($_SESSION['helpdesk_user_id'])) {
       
       
 <?php 
-	
-		
-	
-	
 			$stmt = $dbConnection->prepare('select id, ticket_hash, original_name,file_hash,file_type,file_size,file_ext from files');
 			$stmt->execute();
 			$res1 = $stmt->fetchAll();
-	
-	
-?>      
-      
-      
-      
+?>
 <table class="table table-bordered table-hover" style=" font-size: 14px; " id="">
         <thead>
           <tr>
@@ -114,11 +100,9 @@ if (validate_admin($_SESSION['helpdesk_user_id'])) {
 </div>
 <?php
  include("footer.inc.php");
-?>
 
-<?php
 	}
-	}
+}
 else {
     include '../auth.php';
 }

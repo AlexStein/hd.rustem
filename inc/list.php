@@ -88,8 +88,6 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
             <div class="row">
                 <div class="col-md-3"><h3><i class="fa fa-list-alt"></i> <?= lang('LIST_title'); ?></h3><span
                         class="text-muted">
-                        
-                        
                         <small>
                         	<em>
                         	<?php if ($priv_val != "2") { ?>
@@ -100,24 +98,16 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
 							</em>
                         </small>
                         </span></div>
-                        
-                        
                 <div class="col-md-3" style="padding-top:20px;">
-                   
                     <small class="text-muted">
                     <span class="label label-success">&nbsp;</span>
-                        - <?= lang('LIST_ok_t'); ?> 
+                        - <?= lang('LIST_ok_t'); ?>
                     </small>
-                    
                     <br>
-                    
                     <small class="text-muted">
                     <span class="label label-warning">&nbsp;</span>
-                        - <?= lang('LIST_lock_t_i'); ?> 
+                        - <?= lang('LIST_lock_t_i'); ?>
                     </small>
-                        
-                        
-                        
                 </div>
                 <div class="col-md-3" style="padding-top:20px; ">
                     <small class="text-muted"><span class="label label-default">&nbsp;</span>
@@ -126,12 +116,6 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                     &nbsp;#
                     <small class="text-muted"> - <?= lang('LIST_lock_n'); ?> </small>
                 </div>
-                
-                
-                
-                
-                
-
                 <div class="col-md-3" style="padding-top:20px;">
                     <form action="<?=$CONF['hostname'];?>list" method="get">
                         <div class="input-group">
@@ -371,7 +355,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
             <?php } 
 
 $nn = get_last_ticket($_POST['menu'], $user_id);
-        
+
         if ($nn == 0) {
 
 
@@ -384,8 +368,6 @@ $nn = get_last_ticket($_POST['menu'], $user_id);
         }
         else if ($nn <> 0) {
 ?>
-
-
             <input type="hidden" id="page_type" value="<?= $r; ?>">
             <input type="hidden" id="curent_page" value="1">
             <input type="hidden" id="cur_page" value="1">
@@ -395,21 +377,6 @@ $nn = get_last_ticket($_POST['menu'], $user_id);
             <input type="hidden" id="last_ticket" value="<?= get_last_ticket($_POST['menu'], $user_id); ?>">
 
         <?php } ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <br>
     </div>
     <?php

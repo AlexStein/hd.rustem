@@ -1,7 +1,6 @@
 <?php
 session_start();
-
-include("../functions.inc.php");
+include_once("functions.inc.php");
 $rkeys=array_keys($_GET);
 
 $CONF['title_header']=lang('TICKET_name')." #".get_ticket_id_by_hash($rkeys[1])." - ".$CONF['name_of_firm'];
@@ -114,6 +113,12 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
 <input type="hidden" id="last_update" value="<?=$row['last_update'];?>">
 <input type="hidden" id="ticket_id" value="<?=$row['id'];?>">
 <input type="hidden" id="ticket_hash" value="<?=$row['hash_name'];?>">
+
+<input type="hidden" id="file_array" value="">
+<input type="hidden" id="hashname" value="<?=$row['hash_name'];?>">
+<input type="hidden" id="file_types" value="<?= $CONF['file_types'] ?>">
+<input type="hidden" id="file_size" value="<?= $CONF['file_size'] ?>">
+
 <div class="container">
   <div class="row">
     <div class="col-md-8">
@@ -206,7 +211,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
             </tbody>
           </table>
 
-          <link rel="stylesheet" href="<?=$CONF['hostname']?>/css/ticket_style.css">
+          <link rel="stylesheet" href="<?=$CONF['hostname']?>css/ticket_style.css">
 
           <?php if (($inituserid_flag == 1) && ($arch == 0)) { ?>
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -239,37 +244,6 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                           </div>
                         </div>
                       </div>
-
-                      <?php if ($CONF['file_uploads'] == "true") { ?>
-                        <div class="control-group">
-                          <div class="controls">
-                            <div class="form-group">
-                              <label for="" class="col-sm-2 control-label"><small><?=lang('TICKET_file_add');?>:</small></label>
-                              <div class="col-sm-10">
-
-                                <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
-                                  <div class="fileupload-buttonbar">
-                                    <div class="">
-                                      <!-- The fileinput-button span is used to style the file input field as button -->
-                                      <span class="btn btn-success fileinput-button btn-xs">
-                                        <i class="glyphicon glyphicon-plus"></i>
-                                        <span><?=lang('TICKET_file_upload')?></span>
-                                        <input id="filer" type="file" name="files[]" multiple>
-                                      </span>
-                                      <br>
-                                      <small class="text-muted"><?=lang('TICKET_file_upload_msg');?></small>
-                                      <!-- The global file processing state -->
-                                      <span class="fileupload-process"></span>
-                                    </div>
-                                  </div>
-                                  <!-- The table listing the files available for upload/download -->
-                                  <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      <?php } ?>
 
                       <?php if ($CONF['fix_subj'] == "false") { ?>
                         <div class="control-group" id="for_s">
@@ -358,7 +332,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
              $res1 = $stmt->fetchAll();
              if (!empty($res1)) { ?>
                <hr style="margin:0px;">
-               <div class="row" style="padding:10px;">
+               <div class="row" style="padding:10px;" id="file_list">
                  <div class="col-md-3">
                    <center><small><strong><?=lang('TICKET_file_list')?>:</strong></small></center>
                  </div>
@@ -442,6 +416,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                </div>
              </div>
            </div>
+
            <div id="refer_to" class="col-md-12 panel panel-default" style="padding:10px; margin-top: 20px; margin-bottom: 0px;">
              <div class="form-group" id="t_for_to" data-toggle="popover" data-html="true" data-trigger="manual" data-placement="right" data-content="<small><?=lang('NEW_to_unit_desc');?></small>">
                <label for="to" class="col-sm-3 control-label"><small><?=lang('TICKET_t_refer_to');?>: </small></label>
@@ -534,6 +509,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
            <br>
         </div>
       </div>
+
       <div  class="tabbable hidden-print">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#home" data-toggle="tab"><i class="fa fa-comments-o"></i> <?=lang('TICKET_t_comment');?></a></li>
@@ -552,12 +528,40 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                   <hr>
                   <div class="control-group">
                     <div class="controls">
+                      <div class="col-sm-12">
+                          <?php if ($CONF['file_uploads'] == "true") { ?>
+                            <div class="control-group">
+                              <div class="controls">
+                                <div class="form-group">
+                                  <label for="" class="col-sm-2 control-label"><small><?=lang('TICKET_file_add');?>:</small></label>
+                                  <div class="col-sm-10">
+
+                                    <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
+                                      <div class="fileupload-buttonbar">
+                                        <div class="">
+                                          <!-- The fileinput-button span is used to style the file input field as button -->
+                                          <span class="btn btn-success fileinput-button btn-xs">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                            <span><?=lang('TICKET_file_upload')?></span>
+                                            <input id="filer" type="file" name="files[]" multiple>
+                                          </span>
+                                          <!-- The global file processing state -->
+                                          <span class="fileupload-process"></span>
+                                        </div>
+                                      </div>
+                                      <!-- The table listing the files available for upload/download -->
+                                      <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table> 
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <?php } ?>      
+                      </div>
                       <div class="form-group" id="for_msg">
                         <label for="msg" class="col-sm-3 control-label"><small><?=lang('TICKET_t_your_comment');?>:</small></label>
                         <div class="col-sm-12" style="">
-                          <textarea data-toggle="popover" data-html="true" data-trigger="manual" data-placement="right" data-content="&lt;small&gt;<?=lang('TICKET_t_det_ticket');?>&lt;/small&gt;" placeholder="<?=lang('TICKET_t_comm_ph');?>" class="form-control input-sm animated" name="msg" id="msg" rows="1" required="" data-validation-required-message="Укажите сообщение" aria-invalid="false">
-
-                          </textarea>
+                          <textarea data-toggle="popover" data-html="true" data-trigger="manual" data-placement="right" data-content="&lt;small&gt;<?=lang('TICKET_t_det_ticket');?>&lt;/small&gt;" placeholder="<?=lang('TICKET_t_comm_ph');?>" class="form-control input-sm animated" name="msg" id="msg" rows="1" required="" data-validation-required-message="Укажите сообщение" aria-invalid="false"></textarea>
                         </div>
                         <div class="col-sm-12" style="">
                           <button id="do_comment" user="<?=$_SESSION['helpdesk_user_id']?>" value="<?=$tid?>" type="button" class="btn btn-default btn-sm pull-right"><?=lang('TICKET_t_send');?>
@@ -591,10 +595,83 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
     <center><?=lang('TICKET_t_no');?></center>
   </div>
 <?php } ?>
+<?php include("footer.inc.php"); ?>
+<!-- The template to display files available for upload -->
+<script type="text/javascript" id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade" id="up_entry">
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">
+{% if (file.name.length>20) { %}
+{%=file.name.substr(0,10) %}...{%=file.name.substr(-5) %}
+{% } %}
+{% if (file.name.length<20) { %}
+{%=file.name%}
+{% } %}
+
+            </p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        </td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+                <button id="s_start" class="btn btn-primary start btn-xs" disabled><i class="glyphicon glyphicon-upload"></i> <?=lang('TICKET_file_startupload');?>
+                </button>
+            {% } %}
+            {% if (!i) { %}
+                <button class="btn btn-warning cancel btn-xs">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span><?=lang('TICKET_file_notupload_one');?></span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+<!-- The template to display files available for download -->
+
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+        </td>
+        <td>
+            <p class="name">
+{% if (file.name2.length>30) { %}
+	<?=lang('file_info');?>: {%=file.name2.substr(0,30) %}...{%=file.name2.substr(-5) %} - <?=lang('file_info2');?>
+{% } %}
+{% if (file.name2.length<30) { %}
+	<?=lang('file_info');?>: {%=file.name2%} - <?=lang('file_info2');?>
+{% } %}
+
+            </p>
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+        	<p class="name">
+	<span class="label label-success"><i class="fa fa-check"></i> ok</span>
+		</p>
+	</td>
+            </tr>
+{% } %}
+</script>
 <?php
-    include("footer.inc.php");
+
 }
 else {
-    include 'auth.php';
+    include('auth.php');
 }
 ?>

@@ -169,10 +169,6 @@ if ($row['is_read'] <> "0") { $style=""; }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
 ////////////////////////////Показывает labels//////////////////////////////////////////////////////////////
                 if ($row['status'] == 1) {$st=  "<span class=\"label label-success\"><i class=\"fa fa-check-circle\"></i> ".lang('t_list_a_oko')." ".nameshort(name_of_user_ret($ob))."</span>";
                     $t_ago=get_date_ok($row['date_create'], $row['id']);
@@ -189,13 +185,6 @@ if ($row['is_read'] <> "0") { $style=""; }
                     if ($lb == 0) {$st=  "<span class=\"label label-primary\"><i class=\"fa fa-clock-o\"></i> ".lang('t_list_a_hold')."</span>";}
                 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    
-    
-                    
-
-
-
 
                     ?>
 
@@ -224,19 +213,9 @@ if ($row['is_read'] <> "0") { $style=""; }
                 ?>
                 </tbody>
             </table>
-
-
-
-
-
-
         <?php
 
         }
-
-
-
-
     }
 
     if ($_POST['menu'] == 'find' ) {
