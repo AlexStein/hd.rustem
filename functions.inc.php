@@ -272,8 +272,8 @@ function view_log($tid)
 {
     global $dbConnection;
     $stmt = $dbConnection->prepare('SELECT msg,
-							date_op, init_user_id, to_user_id, to_unit_id from ticket_log where
-							ticket_id=:tid order by date_op DESC');
+                            date_op, init_user_id, to_user_id, to_unit_id from ticket_log where
+                            ticket_id=:tid order by date_op DESC');
     $stmt->execute(array(
         ':tid' => $tid
     ));
@@ -288,10 +288,10 @@ function view_log($tid)
                                         <table class="table table-hover">
                                             <thead>
                                             <tr>
-                                                <th><center><small><?= lang('TICKET_t_date'); ?></small></center>	</th>
-                                                <th><center><small><?= lang('TICKET_t_init'); ?>	</small></center></th>
-                                                <th><center><small><?= lang('TICKET_t_action'); ?> 	</small></center></th>
-                                                <th><center><small><?= lang('TICKET_t_desc'); ?>	</small></center></th>
+                                                <th><center><small><?= lang('TICKET_t_date'); ?></small></center>   </th>
+                                                <th><center><small><?= lang('TICKET_t_init'); ?>    </small></center></th>
+                                                <th><center><small><?= lang('TICKET_t_action'); ?>  </small></center></th>
+                                                <th><center><small><?= lang('TICKET_t_desc'); ?>    </small></center></th>
 
 
                                             </tr>
@@ -397,7 +397,7 @@ function view_comment($tid)
     global $dbConnection;
 ?>
 
-    	<div class="row" id="comment_body" style="max-height: 400px; scroll-behavior: initial; overflow-y: scroll;">
+        <div class="row" id="comment_body" style="max-height: 400px; scroll-behavior: initial; overflow-y: scroll;">
         <div class="timeline-centered">
         <?php
     $stmt = $dbConnection->prepare('SELECT user_id, comment_text, dt from comments where t_id=:tid order by dt ASC');
@@ -418,7 +418,7 @@ function view_comment($tid)
                 <div class="timeline-label">
                                                     <div class="header">
                                     <strong class="primary-font"><?= nameshort(name_of_user_ret($rews['user_id'])); ?></strong> <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span> 
+                                        <span class="glyphicon glyphicon-time"></span>
                                         <time id="b" datetime="<?= $rews['dt']; ?>"></time> <time id="c" datetime="<?= $rews['dt']; ?>"></time></small>
 
                                 </div><br>
@@ -438,8 +438,8 @@ function check_unlinked_file()
 {
     global $dbConnection;
     $stmt = $dbConnection->prepare('SELECT original_name, ticket_hash, file_hash, file_ext FROM files
-									LEFT JOIN tickets ON tickets.hash_name = files.ticket_hash
-									WHERE tickets.hash_name IS NULL');
+                                    LEFT JOIN tickets ON tickets.hash_name = files.ticket_hash
+                                    WHERE tickets.hash_name IS NULL');
     $stmt->execute();
     $result = $stmt->fetchAll();
     if (!empty($result)) {
@@ -539,10 +539,10 @@ function get_helper()
     $units     = explode(",", $unit_user);
     array_push($units, "0");
     $stmt = $dbConnection->prepare('SELECT
-							id, user_init_id, unit_to_id, dt, title, message, hashname
-							from helper
-							order by dt desc
-							limit 5');
+                            id, user_init_id, unit_to_id, dt, title, message, hashname
+                            from helper
+                            order by dt desc
+                            limit 5');
     $stmt->execute();
     $result = $stmt->fetchAll();
 ?>
@@ -914,7 +914,7 @@ function get_client_info($id)
 ?>
                 <time id="b" datetime="<?= $lt; ?>"></time>
                 <time id="c" datetime="<?= $lt; ?>"></time>
-                            
+
                             <?php
             if ($priv_val <> "1") {
 ?></a><?php
@@ -1210,8 +1210,8 @@ function get_last_ticket($menu, $id)
             $max_id = $max[0];
         } else if ($priv_val == "1") {
             $stmt    = $dbConnection->prepare("SELECT max(last_update) from tickets where (
-			(user_to_id=:id) or (user_to_id=:tid and unit_id IN (" . $in_query . "))
-			) or user_init_id=:id2");
+            (user_to_id=:id) or (user_to_id=:tid and unit_id IN (" . $in_query . "))
+            ) or user_init_id=:id2");
             $paramss = array(
                 ':id' => $id,
                 ':tid' => '0',
@@ -1438,10 +1438,10 @@ function get_last_ticket($menu, $id)
             $max    = $stmt->fetch(PDO::FETCH_NUM);
             $max_id = $max[0];
         } else if ($priv_val == "1") {
-            $stmt    = $dbConnection->prepare("SELECT max(last_update) from tickets where 
+            $stmt    = $dbConnection->prepare("SELECT max(last_update) from tickets where
             (user_to_id=:id and unit_id IN (" . $in_query . ") and arch='1')
              or
-			(user_to_id='0' and unit_id IN (" . $in_query2 . ") and arch='1')");
+            (user_to_id='0' and unit_id IN (" . $in_query2 . ") and arch='1')");
             $paramss = array(
                 ':id' => $id
             );
@@ -1955,9 +1955,9 @@ function get_total_pages($menu, $id)
             $count = $count[0];
         } else if ($priv_val == "1") {
             $res     = $dbConnection->prepare("SELECT count(*) from tickets
-							where (user_to_id=:id and unit_id IN (" . $in_query . ") and arch='1') or
-							(user_to_id='0' and unit_id IN (" . $in_query2 . ") and arch='1') or
-							(user_init_id=:id2 and arch='1')");
+                            where (user_to_id=:id and unit_id IN (" . $in_query . ") and arch='1') or
+                            (user_to_id='0' and unit_id IN (" . $in_query2 . ") and arch='1') or
+                            (user_init_id=:id2 and arch='1')");
             $paramss = array(
                 ':id' => $id,
                 ':id2' => $id
@@ -2093,6 +2093,7 @@ function cutstr_ret($input)
     if ($result != $input)
         return '...';
 }
+
 function cutstr($input)
 {
     $result = implode(array_slice(explode('<br>', wordwrap($input, 51, '<br>', false)), 0, 1));
@@ -2100,6 +2101,40 @@ function cutstr($input)
     if ($result != $input)
         echo '...';
 }
+
+function rip_tags($string) {
+   
+    // ----- escape quotes -----
+    $string = preg_replace('/"/', ' ', $string);
+    $string = preg_replace('/\'/', ' ', $string);
+    
+    // ----- remove HTML TAGs -----
+    $string = preg_replace('/<[^>]*>/', ' ', $string);
+   
+    // ----- remove control characters -----
+    //$string = str_replace("\r", '', $string);    // --- replace with empty space
+    //$string = str_replace("\n", ' ', $string);   // --- replace with space
+    //$string = str_replace("\t", ' ', $string);   // --- replace with space
+   
+    // ----- remove multiple spaces -----
+    $string = trim(preg_replace('/ {2,}/', ' ', $string));
+    
+    // ----- remove &gt; symbols -----
+    $string = preg_replace('/>/', ' ', $string);
+    
+    return $string;
+
+}
+
+function cutstr_title($input)
+{
+    $result = rip_tags($input);
+    $result = implode(array_slice(explode('\n', wordwrap($result, 79, '\n', false)), 0, 16));
+    echo $result;
+    if ($result != $input)
+        echo '...';
+}
+
 function get_date_ok($d_create, $id)
 {
     global $dbConnection;

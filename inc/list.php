@@ -89,13 +89,13 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                 <div class="col-md-3"><h3><i class="fa fa-list-alt"></i> <?= lang('LIST_title'); ?></h3><span
                         class="text-muted">
                         <small>
-                        	<em>
-                        	<?php if ($priv_val != "2") { ?>
-								<span data-toggle="tooltip" data-placement="right" title="<?=view_array($text); ?>"><?=lang('LIST_pin')?>: <?=count($text); ?>
-								</span>
-								<?php }
-								else if ($priv_val == "2") { echo $text; } ?>
-							</em>
+                            <em>
+                            <?php if ($priv_val != "2") { ?>
+                                <span data-toggle="tooltip" data-placement="right" title="<?=view_array($text); ?>"><?=lang('LIST_pin')?>: <?=count($text); ?>
+                                </span>
+                                <?php }
+                                else if ($priv_val == "2") { echo $text; } ?>
+                            </em>
                         </small>
                         </span></div>
                 <div class="col-md-3" style="padding-top:20px;">
@@ -121,14 +121,13 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                         <div class="input-group">
 
                             <input name="t" type="text" class="form-control  input-sm" id="input_find" data-toggle="tooltip" data-placement="bottom" title="<?= lang('LIST_find_ph'); ?>">
-                              <input name="find" type="hidden">
-      <span class="input-group-btn">
-        <button class="btn btn-default  btn-sm" type="submit" title="Нажмите для поиска"
-                id=""><?= lang('LIST_find_button'); ?></button>
-      </span>
-
+                            <input name="find" type="hidden">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default  btn-sm" type="submit" title="Нажмите для поиска" id="">
+                                        <?= lang('LIST_find_button'); ?>
+                                    </button>
+                                </span>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -152,143 +151,120 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
             </center>
         </div>
         <div id="content">
+<?php
+if (isset($_GET['in'])) {
+    $_POST['menu'] = "in";
+    $_POST['page'] = "1";
+    include_once("list_content.inc.php");
+    ?>
+<?php
+}
+
+if (isset($_GET['out'])) {
+    $_POST['menu'] = "out";
+    $_POST['page'] = "1";
+    include_once("list_content.inc.php");
+}
+
+if (isset($_GET['arch'])) {
+    $_POST['menu'] = "arch";
+    $_POST['page'] = "1";
+    include_once("list_content.inc.php");
+}
 
 
-            <?php
-
-
-            if (isset($_GET['in'])) {
-                $_POST['menu'] = "in";
-                $_POST['page'] = "1";
-                include_once("list_content.inc.php");
-                ?>
-
-
-
-            <?php
-            }
-
-            if (isset($_GET['out'])) {
-                $_POST['menu'] = "out";
-                $_POST['page'] = "1";
-                include_once("list_content.inc.php");
-            }
-
-            if (isset($_GET['arch'])) {
-                $_POST['menu'] = "arch";
-                $_POST['page'] = "1";
-                include_once("list_content.inc.php");
-            }
-
-
-            if (isset($_GET['find'])) {
-                $_POST['menu'] = "find";
-                include_once("list_content.inc.php");
-            }
-
-
-            ?>
-
-
+if (isset($_GET['find'])) {
+    $_POST['menu'] = "find";
+    include_once("list_content.inc.php");
+}
+?>
         </div>
-
         <div id="alert-content"></div>
+<?php
 
-        <?php
+if (isset($_GET['in'])) {
+    $r = "in"; 
         
-			
-			
-			if (isset($_GET['in'])) {
-                $r = "in"; 
-                
-        if (isset($_SESSION['hd.rustem_list_in'])) {
-	      
-	      
-	      switch($_SESSION['hd.rustem_list_in']) {
-	case '10': 	$ac['10']="active";		break;
-	case '15': 	$ac['15']="active";		break;
-	case '20': 	$ac['20']="active";		break;
-	default: $ac['10']="active";
-}	
-        }
-        
-        if (isset($_SESSION['hd.rustem_sort_in'])) {
-	      
-	      
-	      switch($_SESSION['hd.rustem_sort_in']) {
-	case 'ok': 		$button_sort_in['ok']="active";		break;
-	case 'free': 	$button_sort_in['free']="active";		break;
-	case 'ilock': 	$button_sort_in['ilock']="active";		break;
-	case 'lock': 	$button_sort_in['lock']="active";		break;
-	default: $button_sort_in['main']="active";
-}	
+    if (isset($_SESSION['hd.rustem_list_in'])) {
+      
+      
+        switch($_SESSION['hd.rustem_list_in']) {
+            case '10':  $ac['10']="active";     break;
+            case '15':  $ac['15']="active";     break;
+            case '20':  $ac['20']="active";     break;
+            default: $ac['10']="active";
         }
 
-                ?>
+    if (isset($_SESSION['hd.rustem_sort_in'])) {
+        switch($_SESSION['hd.rustem_sort_in']) {
+            case 'ok':      $button_sort_in['ok']="active";     break;
+            case 'free':    $button_sort_in['free']="active";       break;
+            case 'ilock':   $button_sort_in['ilock']="active";      break;
+            case 'lock':    $button_sort_in['lock']="active";       break;
+            default: $button_sort_in['main']="active";
+        }
+    }
+?>
                 
                 
                     <div class="">
                     <div class="pull-left">
+                        
+                        <div class="btn-group btn-group-xs">
+                        
+                        <button  id="sort_list" value="main" type="button" class="btn btn-primary <?=$button_sort_in['main'];?>" data-toggle="tooltip" data-placement="bottom" title="<?=lang('ticket_sort_def')?>"><i class="fa fa-home"></i> </button>
+                        
+                        <button  id="sort_list" value="free" data-toggle="tooltip" data-placement="bottom" title="<?=lang('STATS_t_free')?>" type="button" class="btn btn-info <?=$button_sort_in['free'];?>"><i class="fa fa-circle-thin"></i> </button>
+                        
+                        <button  id="sort_list" value="ok" data-toggle="tooltip" data-placement="bottom" title="<?=lang('ticket_sort_ok')?>" type="button" class="btn btn-success <?=$button_sort_in['ok'];?>"><i class="fa fa-check-circle"></i> </button>
+                        
+                        <button  id="sort_list" value="ilock" data-toggle="tooltip" data-placement="bottom" title="<?=lang('ticket_sort_ilock')?>" type="button" class="btn btn-warning <?=$button_sort_in['ilock'];?>"><i class="fa fa-gavel"></i> </button>
+                        
+                        <button  id="sort_list" value="lock" data-toggle="tooltip" data-placement="bottom" title="<?=lang('ticket_sort_lock')?>" type="button" class="btn btn-default <?=$button_sort_in['lock'];?>"><i class="fa fa-gavel"></i> </button>
                     
-<div class="btn-group btn-group-xs">
-  
-  <button  id="sort_list" value="main" type="button" class="btn btn-primary <?=$button_sort_in['main'];?>" data-toggle="tooltip" data-placement="bottom" title="<?=lang('ticket_sort_def')?>"><i class="fa fa-home"></i> </button>
-  
-    <button  id="sort_list" value="free" data-toggle="tooltip" data-placement="bottom" title="<?=lang('STATS_t_free')?>" type="button" class="btn btn-info <?=$button_sort_in['free'];?>"><i class="fa fa-circle-thin"></i> </button>
-    
-  <button  id="sort_list" value="ok" data-toggle="tooltip" data-placement="bottom" title="<?=lang('ticket_sort_ok')?>" type="button" class="btn btn-success <?=$button_sort_in['ok'];?>"><i class="fa fa-check-circle"></i> </button>
-  
-  <button  id="sort_list" value="ilock" data-toggle="tooltip" data-placement="bottom" title="<?=lang('ticket_sort_ilock')?>" type="button" class="btn btn-warning <?=$button_sort_in['ilock'];?>"><i class="fa fa-gavel"></i> </button>
-  
-  <button  id="sort_list" value="lock" data-toggle="tooltip" data-placement="bottom" title="<?=lang('ticket_sort_lock')?>" type="button" class="btn btn-default <?=$button_sort_in['lock'];?>"><i class="fa fa-gavel"></i> </button>
-
-</div>
+                    </div>
                     
                     
                     
-                                        </div>
+                    </div>
                     <div class="text-center">
                         
                     
                         
                         <ul id="example_in" class="pagination pagination-sm"></ul>
                         <div class="pull-right">
-	                        
-	                        <div class="btn-group btn-group-xs">
-  <button id="list_set_ticket" type="button" class="btn btn-default <?=$ac['10'];?>">10</button>
-  <button id="list_set_ticket" type="button" class="btn btn-default <?=$ac['15'];?>">15</button>
-  <button id="list_set_ticket" type="button" class="btn btn-default <?=$ac['20'];?>">20</button>
-</div>
-	                        
+                            
+                            <div class="btn-group btn-group-xs">
+                              <button id="list_set_ticket" type="button" class="btn btn-default <?=$ac['10'];?>">10</button>
+                              <button id="list_set_ticket" type="button" class="btn btn-default <?=$ac['15'];?>">15</button>
+                              <button id="list_set_ticket" type="button" class="btn btn-default <?=$ac['20'];?>">20</button>
+                            </div>
+                            
                         </div>
                     </div></div>
                 
-            <?php } ?>
-            <?php if (isset($_GET['out'])) {
-                $r = "out"; 
-                
-                        if (isset($_SESSION['hd.rustem_list_out'])) {
-	      
-	      
-	      switch($_SESSION['hd.rustem_list_out']) {
-	case '10': 	$ac['10']="active";		break;
-	case '15': 	$ac['15']="active";		break;
-	case '20': 	$ac['20']="active";		break;
-	default: $ac['10']="active";
-}	
-        }
-                if (isset($_SESSION['hd.rustem_sort_out'])) {
-	      
-	      
-	      switch($_SESSION['hd.rustem_sort_out']) {
-	case 'ok': 		$button_sort_out['ok']="active";		break;
-	case 'free': 	$button_sort_out['free']="active";		break;
-	case 'ilock': 	$button_sort_out['ilock']="active";		break;
-	case 'lock': 	$button_sort_out['lock']="active";		break;
-	default: $button_sort_out['main']="active";
-}	
-        }
-                ?>
+<?php } ?>
+<?php if (isset($_GET['out'])) {
+    $r = "out"; 
+    
+    if (isset($_SESSION['hd.rustem_list_out'])) {
+        switch($_SESSION['hd.rustem_list_out']) {
+            case '10':  $ac['10']="active";     break;
+            case '15':  $ac['15']="active";     break;
+            case '20':  $ac['20']="active";     break;
+            default: $ac['10']="active";
+        }   
+    }
+    if (isset($_SESSION['hd.rustem_sort_out'])) {
+        switch($_SESSION['hd.rustem_sort_out']) {
+            case 'ok':      $button_sort_out['ok']="active";        break;
+            case 'free':    $button_sort_out['free']="active";      break;
+            case 'ilock':   $button_sort_out['ilock']="active";     break;
+            case 'lock':    $button_sort_out['lock']="active";      break;
+            default: $button_sort_out['main']="active";
+        }   
+    }
+?>
                 
                     <div class="pull-left">
                     
@@ -315,13 +291,13 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                                                         
                     <ul id="example_out" class="pagination pagination-sm"></ul>
                                             <div class="pull-right">
-	                        
-	                        <div class="btn-group btn-group-xs">
+                            
+                            <div class="btn-group btn-group-xs">
   <button id="list_set_ticket" type="button" class="btn btn-default <?=$ac['10'];?>">10</button>
   <button id="list_set_ticket" type="button" class="btn btn-default <?=$ac['15'];?>">15</button>
   <button id="list_set_ticket" type="button" class="btn btn-default <?=$ac['20'];?>">20</button>
 </div>
-	                        
+                            
                         </div>
                         
                 </div>
@@ -329,14 +305,14 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
             <?php if (isset($_GET['arch'])) {
                 $r = "arch"; 
                         if (isset($_SESSION['hd.rustem_list_arch'])) {
-	      
-	      
-	      switch($_SESSION['hd.rustem_list_arch']) {
-	case '10': 	$ac['10']="active";		break;
-	case '15': 	$ac['15']="active";		break;
-	case '20': 	$ac['20']="active";		break;
-	default: $ac['10']="active";
-}	
+          
+          
+          switch($_SESSION['hd.rustem_list_arch']) {
+    case '10':  $ac['10']="active";     break;
+    case '15':  $ac['15']="active";     break;
+    case '20':  $ac['20']="active";     break;
+    default: $ac['10']="active";
+}   
         }
                 ?>
                 
