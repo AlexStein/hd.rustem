@@ -1,7 +1,6 @@
-<?php 
+<?php
 function lang ($phrase) {
 	static $lang = array (
-	
 'ALLSTATS_main' => 'General Statistics',
 'ALLSTATS_help' => 'This section contains statistics of all departments and their users for which you have permissions.',
 'ALLSTATS_unit' => 'Information about the applications of your departments',
@@ -16,10 +15,12 @@ function lang ($phrase) {
 'ALLSTATS_user_out_all' => 'Create (of)',
 'ALLSTATS_user_out_all_not' => 'Create (not performance)',
 'stats_last_time'=>'Last login: ',
-	
-	
-	
-	'NAVBAR_files'=>'Ticket\' files',  
+
+'REPORT_main'=>'Tickets report',
+'REPORT_help'=>'This section contains statistics of all departments and their users for which you have permissions.',
+'REPORT_unit_ago'=>'Trickets for',
+
+'NAVBAR_files'=>'Ticket\' files',
 'T_from'=>'from',
 'FILES_title' => 'Files of applications',
 'FILES_off' => 'Currently disabled downloading files to applications. To activate,  <a href="./config">go here </a> and activate downloading files to the application. ',
@@ -32,14 +33,12 @@ function lang ($phrase) {
 
 'CONF_file_types'=>'Permitted file types',
 'CONF_file_size'=>'Maximum file size',
-	
-	
-	 'DEPS_off'=>'Currently disabled fixed list of those applications. To enable it,  <a href="./config">go here </a> applications and select the theme "fixity" list.', 
-	 
+
+'DEPS_off'=>'Currently disabled fixed list of those applications. To enable it,  <a href="./config">go here </a> applications and select the theme "fixity" list.',
+
 'TICKET_t_a_e_prio'=>'in the application has been changed the priority',
 
-	 
-	    'CONF_info'=>'This section contains the basic system configuration.',
+'CONF_info'=>'This section contains the basic system configuration.',
 'CONF_title' => 'System Settings',
 'CONF_mains' => 'General Settings',
 'CONF_name' => 'Name of Organization',
@@ -70,18 +69,15 @@ function lang ($phrase) {
 'CONF_mail_pass' => 'Password',
 'CONF_mail_from' => 'Opravitel',
 'CONF_mail_debug' => 'Debug mode',
- 'CONF_mail'=>'E-mail of admin',
-	'CONF_mail_type'=>'Type',
-	 'HELPER_info'=>'This section can contain instructions and documentation for solutions to common problems.',
-	
-	
-	
-	
-	'LIST_pin' => 'Units',
-	'DASHBOARD_TITLE' => 'Dashboard',
-	'DASHBOARD_ticket_stats' => 'Statistics Tickets',
-	'DASHBOARD_ticket_in_desc' => 'Incoming free Ticket that you can take',
-	'DASHBOARD_ticket_in' => 'incoming requests',
+'CONF_mail'=>'E-mail of admin',
+'CONF_mail_type'=>'Type',
+'HELPER_info'=>'This section can contain instructions and documentation for solutions to common problems.',
+
+'LIST_pin' => 'Units',
+'DASHBOARD_TITLE' => 'Dashboard',
+'DASHBOARD_ticket_stats' => 'Statistics Tickets',
+'DASHBOARD_ticket_in_desc' => 'Incoming free Ticket that you can take',
+'DASHBOARD_ticket_in' => 'incoming requests',
 'DASHBOARD_ticket_lock' => 'blocked me',
 'DASHBOARD_ticket_lock_desc' => 'Ticket with which you are working',
 'DASHBOARD_ticket_out' => 'outgoing ticket',
@@ -187,7 +183,6 @@ function lang ($phrase) {
 ,'HELP_create' => 'Create' 
 ,'MSG_no_records' => 'No entries' 
 ,'TICKET_name' => 'Ticket' 
-
 
 ,'TICKET_p_add_client'=>'Add clients',
 'TICKET_p_edit_client'=>'Edit clients'
@@ -302,6 +297,7 @@ function lang ($phrase) {
 ,'NAVBAR_approve' => 'Confirm' 
 ,'NAVBAR_all_tickets' => 'All Tickets' 
 ,'NAVBAR_reports' => 'Reports' 
+,'NAVBAR_report' => 'Report' 
 ,'NAVBAR_db' => 'Directories' 
 ,'NAVBAR_posads' => 'Posts' 
 ,'NAVBAR_units' => 'Manage' 
@@ -571,6 +567,6 @@ To do this, there is a section - Members. Locate the user that you need and chan
 ''=>''
 );
 return isset($lang[$phrase]) ? $lang[$phrase] : 'undefined';
-//return $lang[$phrase]; 
-} 
+//return $lang[$phrase];
+}
 ?>

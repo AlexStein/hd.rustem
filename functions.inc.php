@@ -1502,7 +1502,7 @@ function get_total_tickets_out($in)
     $count = $res->fetch(PDO::FETCH_NUM);
     return $count[0];
 }
-function get_total_tickets_lock($in)
+function get_total_tickets_lock($in='')
 {
     global $dbConnection;
     if (empty($in)) {
@@ -1569,7 +1569,7 @@ function get_total_tickets_out_and_ok()
     $count = $res->fetch(PDO::FETCH_NUM);
     return $count[0];
 }
-function get_total_tickets_free($in)
+function get_total_tickets_free($in='')
 {
     global $dbConnection;
     if (empty($in)) {

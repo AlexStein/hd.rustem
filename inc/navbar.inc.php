@@ -6,9 +6,6 @@ function echoActiveClassIfRequestMatches($requestUri)
     $file = explode("?", basename($file));
     $current_file_name=$file[0];
 
-//$file = $_SERVER['REQUEST_URI'];
-//$file = explode("?", basename($file));
-
     if ($current_file_name == $requestUri)
         echo 'class="active"';
 }
@@ -55,32 +52,27 @@ if ($ap == 0) {
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-<!--li class="dropdown">
+        <!--li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-tags"></i> <?=lang('NAVBAR_tickets');?> <?=$newtickets?><b class="caret"></b></a>
                 <ul class="dropdown-menu">
 
             <li <?=echoActiveClassIfRequestMatches("create")?>><a href="<?=$CONF['hostname']?>create"><i class="fa fa-tag"></i> <?=lang('NAVBAR_create_ticket');?></a></li>
             <li <?=echoActiveClassIfRequestMatches("list")?>><a href="<?=$CONF['hostname']?>list"><i class="fa fa-list-alt"></i> <?=lang('NAVBAR_list_ticket');?> <?=$newtickets?></a></li>
                 </ul>
-                
-                
                 </li-->
             <li <?=echoActiveClassIfRequestMatches("create")?>><a href="<?=$CONF['hostname']?>create"><i class="fa fa-tag"></i> <?=lang('NAVBAR_create_ticket');?></a></li>
             <li <?=echoActiveClassIfRequestMatches("list")?>><a href="<?=$CONF['hostname']?>list"><i class="fa fa-list-alt"></i> <?=lang('NAVBAR_list_ticket');?> <?=$newtickets?></a></li>
             <li <?=echoActiveClassIfRequestMatches("clients")?>><a href="<?=$CONF['hostname']?>clients"><i class="fa fa-users"></i> <?=lang('NAVBAR_workers');?></a></li>
-            
+
             <li <?=echoActiveClassIfRequestMatches("helper")?>><a href="<?=$CONF['hostname']?>helper"><i class="fa fa-globe"></i> <?=lang('NAVBAR_helper');?></a></li>
-            
-                        <li <?=echoActiveClassIfRequestMatches("notes")?>><a href="<?=$CONF['hostname']?>notes"><i class="fa fa-book"></i> <?=lang('NAVBAR_notes');?></a></li>
+        <li <?=echoActiveClassIfRequestMatches("notes")?>><a href="<?=$CONF['hostname']?>notes"><i class="fa fa-book"></i> <?=lang('NAVBAR_notes');?></a></li>
 
 <?php
 $priv_val = priv_status($_SESSION['helpdesk_user_id']);
- if ( ($priv_val == "2") || ($priv_val == "0") ) { ?>
+if ( ($priv_val == "2") || ($priv_val == "0") ) { ?>
                         <li <?=echoActiveClassIfRequestMatches("main_stats")?>><a href="<?=$CONF['hostname']?>main_stats"><i class="fa fa-bar-chart-o"></i> <?=lang('ALLSTATS_main');?></a></li>
-                        <?php } ?>
-                        
-
-
+                        <li <?=echoActiveClassIfRequestMatches("ticket_report")?>><a href="<?=$CONF['hostname']?>ticket_report"><i class="fa fa-bar-chart-o"></i> <?=lang('NAVBAR_report');?></a></li>
+                <?php } ?>
             <?php  if (validate_admin($_SESSION['helpdesk_user_id'])) { ?>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shield"></i> <?=lang('NAVBAR_admin');?> <?=$apr;?> <b class="caret"></b></a>
@@ -89,11 +81,9 @@ $priv_val = priv_status($_SESSION['helpdesk_user_id']);
                     <li <?=echoActiveClassIfRequestMatches("config")?>><a href="<?=$CONF['hostname']?>config"><i class="fa fa-cog"></i> <?=lang('NAVBAR_conf');?></a></li>
                     <li <?=echoActiveClassIfRequestMatches("users")?>><a href="<?=$CONF['hostname']?>users"><i class="fa fa-users"></i> <?=lang('NAVBAR_users');?></a></li>
                     <li <?=echoActiveClassIfRequestMatches("deps")?>><a href="<?=$CONF['hostname']?>deps"><i class="fa fa-sitemap"></i> <?=lang('NAVBAR_deps');?></a></li>
-                    
                     <li <?=echoActiveClassIfRequestMatches("files")?>><a href="<?=$CONF['hostname']?>files"><i class="fa fa-files-o"></i>  <?=lang('NAVBAR_files');?></a></li>
-                                        
                     <li <?=echoActiveClassIfRequestMatches("approve")?>><a href="<?=$CONF['hostname']?>approve"><i class="fa fa-check-square-o"></i> <?=lang('NAVBAR_approve');?> <?=$apr;?></a></li>
-                    
+
                     <li class="divider"></li>
                                         <li class="dropdown-submenu">
                         <a tabindex="-1" href="#"><i class="fa fa-book"></i> <?=lang('NAVBAR_db');?></a>
@@ -103,27 +93,12 @@ $priv_val = priv_status($_SESSION['helpdesk_user_id']);
                             <li <?=echoActiveClassIfRequestMatches("subj")?>><a href="<?=$CONF['hostname']?>subj"><i class="fa fa-tags"></i> <?=lang('NAVBAR_subjs');?></a></li>
                         </ul>
                     </li>
-
             </li>
-
-
         </ul>
         </li>
-
-
-
-
-
-
-
-        <?php } ?>
+<?php } ?>
         </ul>
-
-
-
-
         <ul class="nav navbar-nav navbar-right">
-
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?=nameshort(name_of_user_ret($_SESSION['helpdesk_user_id']));?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -133,27 +108,6 @@ $priv_val = priv_status($_SESSION['helpdesk_user_id']);
                     <li><a href="<?=$CONF['hostname']?>index.php?logout"><i class="fa fa-sign-out"></i> <?=lang('NAVBAR_logout');?></a></li>
                 </ul>
             </li>
-
-
-
-
-
-
-
-
-
-
-
         </ul>
-
-
-
-
-
-
-
-
-
-
     </div><!-- /.navbar-collapse -->
 </nav>

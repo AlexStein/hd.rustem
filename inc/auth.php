@@ -2,7 +2,6 @@
 include_once("head.inc.php");
 //include("dbconnect.inc.php");
 ?>
-
 <style type="text/css">
     body {
         padding-top: 40px;
@@ -65,10 +64,9 @@ include_once("head.inc.php");
     }
 </style>
 
-</head><body>
-
-<div class="container" id='main_login'>
-    <?php //echo $_SERVER['REQUEST_URI']; ?>
+</head>
+<body>
+    <div class="container" id='main_login'>
     <form class="form-signin" action="<?=$CONF['hostname']?>index.php" method="POST" autocomplete="off">
         <center><img src="<?=$CONF['hostname']?>img/help-desk-icon.png" width="128"><h2 class="text-muted"><?=lang('MAIN_TITLE');?></h2><small class="text-muted"><?=lang('AUTH_USER');?></small></center><br>
         <input type="text" name="login" autocomplete="off" class="form-control" placeholder="<?=lang('login');?>">
@@ -80,34 +78,32 @@ include_once("head.inc.php");
                 </label>
             </div>
         </div>
-        <?php if ($va == 'error') { ?>
-            <div class="alert alert-danger">
-                <center><?=lang('error_auth');?></center>
-            </div> <?php } ?>
+<?php if ($va == 'error') { ?>
+        <div class="alert alert-danger">
+            <center><?=lang('error_auth');?></center>
+        </div>
+<?php } ?>
         <input type="hidden" name="req_url" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
         <button class="btn btn-lg btn-primary btn-block"> <i class="fa fa-sign-in"></i>  <?=lang('log_in');?></button>
-
-        <!hr style=" margin: 10px; ">
-        <?php
-       
-         if ($CONF['first_login'] == "true") { ?>
+        <hr style=" margin: 10px; ">
+<?php
+        if ($CONF['first_login'] == "true") { ?>
         <small>
             <center style=" margin-bottom: -20px; "><br><a href="#" id="show_activate_form"><?=lang('first_in_auth');?>.</a>
             </center>
         </small>
-		<?php } ?>
+<?php } ?>
     </form>
 
 <?php if(ini_get('short_open_tag') == false) { ?>
-<div class="alert alert-danger" role="alert">PHP-error: <em>short_open_tag</em> must be enable in your php configuration. <br> Details: <a href="http://php.net//manual/ru/language.basic-syntax.phptags.php">http://php.net//manual/ru/language.basic-syntax.phptags.php</a></div>
-	<?php } ?>
-	
+    <div class="alert alert-danger" role="alert">PHP-error: <em>short_open_tag</em> must be enable in your php configuration. <br> Details: <a href="http://php.net//manual/ru/language.basic-syntax.phptags.php">http://php.net//manual/ru/language.basic-syntax.phptags.php</a></div>
+<?php } ?>
 
 <?php
     $filename=realpath(dirname(dirname(__FILE__)))."/.htaccess";
     if (!file_exists($filename)) { ?>
     <div class="alert alert-danger" role="alert">.htaccess error: <em><?=$filename?></em> file not exist</div>
-    <?php
+<?php
     }
     // "mod_rewrite module is not enabled";
 ?>
@@ -135,9 +131,6 @@ include_once("head.inc.php");
                 success: function(html){
                     //alert(html);
                     $(".form-signin").hide().html(html).fadeIn(500);
-
-
-
                     $('body').on('click', 'button#do_activate', function(event) {
                         event.preventDefault();
                         var m=$("#mailadress").val();
@@ -151,24 +144,9 @@ include_once("head.inc.php");
                                 $(".form-signin").hide().html(html).fadeIn(500);
                             }
                         });
-
-
-
-
-
                     });
-
-
-
-
                 }
             });
-
-
-
         });
-
-
-
     });
 </script>

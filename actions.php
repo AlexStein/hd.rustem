@@ -4,14 +4,17 @@ include("functions.inc.php");
 if (isset($_POST['mode'])) {
     $mode = ($_POST['mode']);
     $in_query = "";
+
     if ($mode == "get_host_conf") {
         print($CONF['hostname']);
     }
+
     if ($mode == "get_lang_param") {
         $p = ($_POST['param']);
         $r = lang($p);
         print($r);
     }
+
     if ($mode == "activate_login") {
         $mailadr = ($_POST['mailadress']);
         $stmt    = $dbConnection->prepare('SELECT id, fio,login,status FROM users where email=:mailadr');
@@ -35,14 +38,14 @@ if (isset($_POST['mode'])) {
                     <center><?= lang('CREATE_ACC_success'); ?>
                     </center>
                 </div>
-            <?php
+<?php
             } else if ($r['status'] == "1") {
 ?>
                 <div class="alert alert-danger">
                     <center><?= lang('CREATE_ACC_already'); ?>
                     </center>
                 </div>
-            <?php
+<?php
             }
         } else {
 ?>
@@ -50,7 +53,7 @@ if (isset($_POST['mode'])) {
                 <center><?= lang('CREATE_ACC_error'); ?>
                 </center>
             </div>
-        <?php
+<?php
         }
 ?>
         <center><img src="img/help-desk-icon.png"><h2 class="text-muted"><?= lang('MAIN_TITLE'); ?></h2><small class="text-muted"><?= lang('AUTH_USER'); ?></small></center><br>
@@ -63,12 +66,13 @@ if (isset($_POST['mode'])) {
                 </label>
             </div>
         </div>
-        <?php
+<?php
         if ($va == 'error') {
 ?>
             <div class="alert alert-danger">
                 <center><?= lang('error_auth'); ?></center>
-            </div> <?php
+            </div>
+<?php
         }
 ?>
         <input type="hidden" name="req_url" value="/index.php">
@@ -80,7 +84,7 @@ if (isset($_POST['mode'])) {
             </center>
         </small>
 
-    <?php
+<?php
     }
     if ($mode == "activate_login_form") {
 ?>
@@ -92,7 +96,7 @@ if (isset($_POST['mode'])) {
         <br>
         <button id="do_activate" type="submit" class="btn btn-lg btn-success btn-block"> <i class="fa fa-check-circle-o"></i>  <?= lang('action_auth'); ?></button>
 
-    <?php
+<?php
     }
     if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
         if ($mode == "get_list_notes") {
@@ -106,7 +110,7 @@ if (isset($_POST['mode'])) {
             <table class="table table-hover" style="margin-bottom: 0px; margin-bottom: 0px;" id="table_list">
 
 
-            <?php
+<?php
             if (empty($res)) {
                 echo lang('empty');
             } else if (!empty($res)) {
@@ -117,9 +121,11 @@ if (isset($_POST['mode'])) {
                     }
 ?>
                     <tr class="tr_<?= $row['id']; ?>"><td style="width:90%"><a style=" cursor: pointer; " id="to_notes" value="<?= $row['hashname']; ?>"><?= $t_msg; ?></a></td><td><button id="del_notes" value="<?= $row['hashname']; ?>" type="button" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash"></i></button></td></tr>
-                <?php
+<?php
                 }
-?></table><?php
+?>
+                </table>
+<?php
             }
         }
         if ($mode == "check_login") {
@@ -235,8 +241,7 @@ if (isset($_POST['mode'])) {
 
                 <div id="" class="alert alert-warning alert-dismissable" style="padding: 5px; margin-bottom: 10px;">
                     <button style="right: 0px;" type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <small>
-                        <?= lang('msg_created_new_user'); ?> <br></small>
+                    <small><?= lang('msg_created_new_user'); ?> <br></small>
                 </div>
                 <div class="panel panel-success" id="user_info" style="display: block;">
                     <div class="panel-body">
@@ -244,10 +249,6 @@ if (isset($_POST['mode'])) {
                             <h4 class="panel-title"><i class="fa fa-user"></i> <?= lang('WORKER_TITLE'); ?></h4>
                         </div>
                         <div class="panel-body">
-
-
-
-
                             <table class="table  ">
                                 <tbody>
                                 <tr>
@@ -560,7 +561,7 @@ if (isset($_POST['mode'])) {
             $priv_val  = priv_status($user_id);
             $units     = explode(",", $unit_user);
             array_push($units, "0");
-            $stmt = $dbConnection->prepare("SELECT 
+            $stmt = $dbConnection->prepare("SELECT
 							id, user_init_id, unit_to_id, dt, title, message, hashname
 							from helper where title like :t or message like :t2
 							order by dt desc");
@@ -623,7 +624,7 @@ if (isset($_POST['mode'])) {
             $priv_val  = priv_status($user_id);
             $units     = explode(",", $unit_user);
             array_push($units, "0");
-            $stmt = $dbConnection->prepare('SELECT 
+            $stmt = $dbConnection->prepare('SELECT
 							id, user_init_id, unit_to_id, dt, title, message, hashname
 							from helper
 							order by dt desc');
@@ -744,7 +745,7 @@ if (isset($_POST['mode'])) {
                 $vv[":val_" . $key] = $value;
             }
             if ($priv_val == 0) {
-                $stmt    = $dbConnection->prepare('SELECT 
+                $stmt    = $dbConnection->prepare('SELECT
 							id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
 							from tickets
 							where unit_id IN (' . $in_query . ')  and arch=:n
@@ -758,7 +759,7 @@ if (isset($_POST['mode'])) {
                 $stmt->execute(array_merge($vv, $paramss));
                 $results = $stmt->fetchAll();
             } else if ($priv_val == 1) {
-                $stmt    = $dbConnection->prepare('SELECT 
+                $stmt    = $dbConnection->prepare('SELECT
 							id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
 							from tickets
 							where ((user_to_id=:user_id and arch=:n) or
@@ -776,7 +777,7 @@ if (isset($_POST['mode'])) {
                 $stmt->execute(array_merge($vv, $paramss));
                 $results = $stmt->fetchAll();
             } else if ($priv_val == 2) {
-                $stmt = $dbConnection->prepare('SELECT 
+                $stmt = $dbConnection->prepare('SELECT
 							id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
 							from tickets
 							where arch=:n
@@ -810,14 +811,6 @@ if (isset($_POST['mode'])) {
 ?>" id="user_id">
                 <input type="hidden" value="" id="total_tickets">
                 <input type="hidden" value="" id="last_total_tickets">
-
-
-
-
-
-
-
-
                 <div class="table-responsive">
                 <table class="table table-bordered table-hover " style=" font-size: 14px; ">
                 <thead>
@@ -1358,11 +1351,12 @@ if (isset($_POST['mode'])) {
             if ($tt <> 0) {
 ?>
                                 <tr>
-                               
+
                                     <td style=" width: 30px; "><small class="text-muted"><?= lang('WORKER_last'); ?>:</small></td>
                                     <td><small class="text-muted"><?php
                 echo $lt;
-?></small></td>
+?>
+                                    </small></td>
                                 </tr>
                                 <?php
             }
@@ -1373,9 +1367,6 @@ if (isset($_POST['mode'])) {
                     </div>
                 </div>
                 <div class="col-md-8">
-
-
-
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title"><i class="fa fa-pencil-square-o"></i> <?= lang('WORKER_edit_info'); ?></h4>
@@ -1707,7 +1698,6 @@ if (isset($_POST['mode'])) {
                         <td><small><center>
                         <button id="deps_del" type="button" class="btn btn-danger btn-xs" value="<?= $row['id']; ?>">del</button>
                         <button id="<?= $id_action; ?>" type="button" class="btn btn-default btn-xs" value="<?= $row['id']; ?>"><?= $icon; ?></button>
-                        
                         </center></small></td>
                     </tr>
                 <?php
@@ -1747,9 +1737,6 @@ if (isset($_POST['mode'])) {
             ));
             $res1 = $stmt->fetchAll();
 ?>
-
-
-
             <table class="table table-bordered table-hover" style=" font-size: 14px; " id="">
                 <thead>
                 <tr>
@@ -1803,9 +1790,6 @@ if (isset($_POST['mode'])) {
             $stmt->execute();
             $res1 = $stmt->fetchAll();
 ?>
-
-
-
             <table class="table table-bordered table-hover" style=" font-size: 14px; " id="">
                 <thead>
                 <tr>
@@ -1828,9 +1812,6 @@ if (isset($_POST['mode'])) {
                 <?php
             }
 ?>
-
-
-
                 </tbody>
             </table>
             <br>
@@ -1871,9 +1852,6 @@ if (isset($_POST['mode'])) {
                 <?php
             }
 ?>
-
-
-
                 </tbody>
             </table>
             <br>
@@ -1889,9 +1867,6 @@ if (isset($_POST['mode'])) {
             $stmt->execute();
             $res1 = $stmt->fetchAll();
 ?>
-
-
-
             <table class="table table-bordered table-hover" style=" font-size: 14px; " id="">
                 <thead>
                 <tr>
@@ -1932,9 +1907,6 @@ if (isset($_POST['mode'])) {
             $stmt->execute();
             $res1 = $stmt->fetchAll();
 ?>
-
-
-
             <table class="table table-bordered table-hover" style=" font-size: 14px; " id="">
                 <thead>
                 <tr>
@@ -1948,8 +1920,6 @@ if (isset($_POST['mode'])) {
             foreach ($res1 as $row) {
 ?>
                     <tr id="tr_<?= $row['id']; ?>">
-
-
                         <td><small><center><?= $row['id']; ?></center></small></td>
                         <td><small><?= $row['name']; ?></small></td>
                         <td><small><center><button id="posada_del" type="button" class="btn btn-danger btn-xs" value="<?= $row['id']; ?>">del</button></center></small></td>
@@ -1957,9 +1927,6 @@ if (isset($_POST['mode'])) {
                 <?php
             }
 ?>
-
-
-
                 </tbody>
             </table>
             <br>
@@ -1975,9 +1942,6 @@ if (isset($_POST['mode'])) {
             $stmt->execute();
             $res1 = $stmt->fetchAll();
 ?>
-
-
-
             <table class="table table-bordered table-hover" style=" font-size: 14px; " id="">
                 <thead>
                 <tr>
