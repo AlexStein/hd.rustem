@@ -1188,6 +1188,8 @@ function get_last_action_ticket($ticket_id)
 function get_last_ticket($menu, $id)
 {
     $in_query = "";
+    $in_query2 = "";
+
     global $dbConnection;
     if ($menu == "all") {
         $unit_user = unit_of_user($id);
@@ -1654,7 +1656,7 @@ function get_myname()
 function get_total_pages_workers()
 {
     global $dbConnection;
-    $perpage = '10';
+    $perpage = '25';
     $res     = $dbConnection->prepare("SELECT count(*) from clients");
     $res->execute();
     $count = $res->fetch(PDO::FETCH_NUM);
@@ -1679,7 +1681,10 @@ function get_approve()
 function get_total_pages($menu, $id)
 {
     global $dbConnection;
-    $perpage = '10';
+    $perpage = '25';
+    $in_query = "";
+    $in_query2 = "";
+
     if ($menu == "dashboard") {
         $perpage = '10';
         if (isset($_SESSION['hd.rustem_list_in'])) {
@@ -1718,7 +1723,7 @@ function get_total_pages($menu, $id)
         }
     }
     if ($menu == "in") {
-        $perpage = '10';
+        $perpage = '25';
         if (isset($_SESSION['hd.rustem_list_in'])) {
             $perpage = $_SESSION['hd.rustem_list_in'];
         }
@@ -1869,7 +1874,7 @@ function get_total_pages($menu, $id)
         }
     }
     if ($menu == "out") {
-        $perpage = '10';
+        $perpage = '25';
         if (isset($_SESSION['hd.rustem_list_out'])) {
             $perpage = $_SESSION['hd.rustem_list_out'];
         }
@@ -1919,7 +1924,7 @@ function get_total_pages($menu, $id)
         }
     }
     if ($menu == "arch") {
-        $perpage = '10';
+        $perpage = '25';
         if (isset($_SESSION['hd.rustem_list_arch'])) {
             $perpage = $_SESSION['hd.rustem_list_arch'];
         }
