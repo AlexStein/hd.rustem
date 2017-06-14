@@ -6,9 +6,6 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
   if ($_SESSION['helpdesk_user_id']) {
     include ("head.inc.php");
     include ("navbar.inc.php");
-
-    $startdate = date('d.m.Y', strtotime("first day of -2 month"));
-    $enddate = date("d.m.Y", time());
 ?>
 <div class="container">
   <input type="hidden" id="main_last_new_ticket" value="<?php echo get_last_ticket_new($_SESSION['helpdesk_user_id']); ?>">
@@ -19,10 +16,44 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
       </div>
     </div>
   </div>
+  <h4><center><?php echo lang('REPORT_unit_ago'); ?> <time id="a" datetime="<?php echo date('Y-m-d 00:00:00', strtotime("today -2 month")) ?>"></center></h4>
+  <div id="alert-content"></div>
+  <div class="btn-group btn-group-justified">
+    <a class="btn btn-default btn-sm <?= $status_in ?>" role="button" href="?current">
+      <i class="fa fa-list-alt"></i> <?= lang('LIST_current'); ?></a>
+    <a class="btn btn-default btn-sm <?= $status_out ?>" role="button" id="link_out" href="?last_month">
+      <i class="fa fa-list-alt"></i> <?= lang('LIST_last_month'); ?></a>
+    <a class="btn btn-default btn-sm <?= $status_arch ?>" role="button" href="?two_months_ago">
+      <i class="fa fa-list-alt"></i> <?= lang('LIST_two_months_ago'); ?></a>
+  </div>
+
+<?php
+if (isset($_GET['current'])) {
+  $_POST['menu'] = "current";
+  $date_query = "date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 1 MONTH)";
+  $startdate = date('d.m.Y', strtotime("first day of"));
+  $enddate = date("d.m.Y", time());
+}
+
+if (isset($_GET['last_month'])) {
+  $_POST['menu'] = "last_month";
+  $date_query = "date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 2 MONTH) and
+                 date_create < date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 1 MONTH)";
+  $startdate = date('d.m.Y', strtotime("first day of -1 month"));
+  $enddate = date("d.m.Y", strtotime("last day of -1 month"));
+}
+
+if (isset($_GET['two_months_ago'])) {
+  $_POST['menu'] = "two_months_ago";
+  $date_query = "date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 3 MONTH) and
+                 date_create < date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 2 MONTH)";
+  $startdate = date('d.m.Y', strtotime("first day of -2 month"));
+  $enddate = date("d.m.Y", strtotime("last day of -2 month"));
+}
+?>
+
   <div class="row" >
     <div class="col-md-9" style="width:100%;">
-      <h4><center><?php echo lang('REPORT_unit_ago'); ?> <time id="a" datetime="2017-04-01 00:00:00"></center></h4>
-      <h5><center><?php echo lang('T_from') . ' ' .$startdate .' ' .lang('T_to') .' ' .$enddate ?></center></h5>
 <?php
     $user_id=id_of_user($_SESSION['helpdesk_user_login']);
     $unit_user=unit_of_user($user_id);
@@ -40,7 +71,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                             id, prio, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, ok_date
                             from tickets
                             where (unit_id IN ('. $in_query. ') or user_init_id=:user_id)
-                            and date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY),interval - 3 MONTH)
+                            and (' . $date_query . ')
                             order by id DESC');
         $paramss=array(':user_id'=>$user_id);
         $stmt->execute(array_merge($vv,$paramss));
@@ -50,7 +81,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                             id, prio, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, ok_date
                             from tickets
                             where (((user_to_id=:user_id or user_to_id=0) and unit_id IN ('.$in_query.')) or user_init_id=:user_id2 )
-                            and date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY),interval - 3 MONTH)
+                            and (' . $date_query . ')
                             order by id DESC');
         $paramss=array(':user_id'=>$user_id, ':user_id2'=>$user_id);
         $stmt->execute(array_merge($vv,$paramss));
@@ -59,7 +90,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
         $stmt = $dbConnection->prepare('SELECT
                             id, prio, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, ok_date
                             from tickets
-                            where date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY),interval - 3 MONTH)
+                             where (' . $date_query . ')
                             order by id DESC');
 
         $stmt->execute();
@@ -69,6 +100,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
     $aha = count($res1);
     if ($aha == "0") {
 ?>
+        <h5><center><?php echo lang('T_from') . ' ' . $startdate . ' ' . lang('T_to') . ' ' . $enddate ?></center></h5>
         <div id="spinner" class="well well-large well-transparent lead">
             <center><?=lang('MSG_no_records');?></center>
         </div>
@@ -79,7 +111,7 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
         <input type="hidden" value="<?php echo $user_id; ?>" id="user_id">
         <input type="hidden" value="" id="total_tickets">
         <input type="hidden" value="" id="last_total_tickets">
-
+        <h5><center><?php echo lang('T_from') . ' ' .$startdate .' ' .lang('T_to') . ' ' . $enddate ?> - <b><?php echo $aha . ' ' . lang('STATS_t') ?></b></center></h5>
         <table class="table table-bordered table-hover" style=" font-size: 14px; ">
             <thead>
                 <tr>
@@ -91,12 +123,12 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                     </th>
                     <th><center><?=lang('t_LIST_subj');?></center></th>
                     <th><center><?=lang('t_LIST_worker');?></center></th>
+                    <th><center><?=lang('t_LIST_init');?></center></th>
                     <th><center><?=lang('t_LIST_create');?></center></th>
                     <th><center><?=lang('t_LIST_ago');?></center></th>
-                    <th><center><?=lang('t_LIST_init');?></center></th>
                     <th><center><?=lang('t_LIST_to');?></center></th>
-                    <th><center><?=lang('t_LIST_status');?></center></th>
                     <th><center><?=lang('t_list_a_user_ok');?></center></th>
+                    <th><center><?=lang('t_LIST_status');?></center></th>
                     <th><center><?=lang('t_list_a_date_ok');?></center></th>
                 </tr>
             </thead>
@@ -165,12 +197,12 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                     <td style=" vertical-align: middle; "><small class="<?=$muclass;?>"><center><?=$prio?></center></small></td>
                     <td style=" vertical-align: middle; "><small><a href="ticket?<?php echo $row['hash_name']; ?>" title="<?php cutstr_title($row['msg']); ?>"><?php cutstr(make_html($row['subj'], 'no')); ?></a></small></td>
                     <td style=" vertical-align: middle; "><small><?php name_of_client($row['client_id']); ?></small></td>
+                    <td style=" vertical-align: middle; "><small><?=nameshort(name_of_user_ret($row['user_init_id'])); ?></small></td>
                     <td style=" vertical-align: middle; "><small><center><time id="c" datetime="<?=$row['date_create']; ?>"></time></center></small></td>
                     <td style=" vertical-align: middle; "><small class="<?=$muclass;?>"><center><time id="a" datetime="<?=$t_ago;?>"></time></center></small></td>
-                    <td style=" vertical-align: middle; "><small><?=nameshort(name_of_user_ret($row['user_init_id'])); ?></small></td>
                     <td style=" vertical-align: middle; "><small><?=$to_text?></small></td>
-                    <td style=" vertical-align: middle; "><small><center><?=$st;?> </center></small></td>
                     <td style=" vertical-align: middle; "><small><?=nameshort(name_of_user_ret($row['ok_by'])); ?></small></td>
+                    <td style=" vertical-align: middle; "><small><center><?=$st;?> </center></small></td>
                     <td style=" vertical-align: middle; "><small><center><time id="c" datetime="<?=$row['ok_date']; ?>"></time></center></small></td>
                 </tr>
 <?php

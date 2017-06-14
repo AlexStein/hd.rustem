@@ -19,6 +19,7 @@ function lang($phrase){
 'REPORT_help'=>'В данном разделе содержится статистика всех отделов и их пользователей, на которые Вы имеете права доступа.',
 'REPORT_unit_ago'=>'Заявки за',
 
+
 'NAVBAR_files'=>'Файлы заявок',
 'T_from'=>'с',
 'T_to'=>'по',
@@ -123,6 +124,9 @@ function lang($phrase){
  'LIST_out'=>'Исходящие',
  'LIST_arch'=>'Архив',
  'LIST_loading'=>'Идет загрузка',
+ 'LIST_current'=>'Текущий месяц',
+ 'LIST_last_month'=>'Предыдущий месяц',
+ 'LIST_two_months_ago'=>'Два месяца назад',
  'CREATE_ACC_success'=>'Ваша учетная запись успешно активирована! <br> На Вашу электронную почту отправлено логин и пароль.',
  'msg_created_new_user' => 'Будет создан новый пользователь',
  'CREATE_ACC_already'=>'Ваша учетная запись уже активирована.',
@@ -176,8 +180,6 @@ function lang($phrase){
 'HELP_create'=>'Создать',
 'MSG_no_records'=>'Нет записей',
 'TICKET_name'=>'Заявка',
-
-
 
 'WORKER_TITLE'=>'Информация о пользователе',
 'WORKER_fio'=>'ФИО',
