@@ -18,42 +18,53 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
   </div>
   <h4><center><?php echo lang('REPORT_unit_ago'); ?> <time id="a" datetime="<?php echo date('Y-m-d 00:00:00', strtotime("today -2 month")) ?>"></center></h4>
   <div id="alert-content"></div>
-  <div class="btn-group btn-group-justified">
-    <a class="btn btn-default btn-sm <?= $status_in ?>" role="button" href="?current">
-      <i class="fa fa-list-alt"></i> <?= lang('LIST_current'); ?></a>
-    <a class="btn btn-default btn-sm <?= $status_out ?>" role="button" id="link_out" href="?last_month">
-      <i class="fa fa-list-alt"></i> <?= lang('LIST_last_month'); ?></a>
-    <a class="btn btn-default btn-sm <?= $status_arch ?>" role="button" href="?two_months_ago">
-      <i class="fa fa-list-alt"></i> <?= lang('LIST_two_months_ago'); ?></a>
-  </div>
 
 <?php
-if (isset($_GET['current'])) {
-  $_POST['menu'] = "current";
-  $date_query = "date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 1 MONTH)";
-  $startdate = date('d.m.Y', strtotime("first day of"));
-  $enddate = date("d.m.Y", time());
-}
+    if (!isset($_GET['current']) && !isset($_GET['last_month']) && !isset($_GET['two_months_ago'])) {
+        $_GET['current'] = '1';
+    }
 
-if (isset($_GET['last_month'])) {
-  $_POST['menu'] = "last_month";
-  $date_query = "date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 2 MONTH) and
+    if (isset($_GET['current'])) {
+        $_POST['menu'] = "current";
+        $status_current = "active";
+
+        $date_query = "date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 1 MONTH)";
+        $startdate = date('d.m.Y', strtotime("first day of"));
+        $enddate = date("d.m.Y", time());
+    }
+
+    if (isset($_GET['last_month'])) {
+        $_POST['menu'] = "last_month";
+        $status_last_month = "active";
+
+        $date_query = "date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 2 MONTH) and
                  date_create < date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 1 MONTH)";
-  $startdate = date('d.m.Y', strtotime("first day of -1 month"));
-  $enddate = date("d.m.Y", strtotime("last day of -1 month"));
-}
+        $startdate = date('d.m.Y', strtotime("first day of -1 month"));
+        $enddate = date("d.m.Y", strtotime("last day of -1 month"));
+    }
 
-if (isset($_GET['two_months_ago'])) {
-  $_POST['menu'] = "two_months_ago";
-  $date_query = "date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 3 MONTH) and
+    if (isset($_GET['two_months_ago'])) {
+        $_POST['menu'] = "two_months_ago";
+        $status_two_months_ago = "active";
+
+        $date_query = "date_create > date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 3 MONTH) and
                  date_create < date_add(date_add(LAST_DAY(now()), interval 1 DAY), interval - 2 MONTH)";
-  $startdate = date('d.m.Y', strtotime("first day of -2 month"));
-  $enddate = date("d.m.Y", strtotime("last day of -2 month"));
-}
+        $startdate = date('d.m.Y', strtotime("first day of -2 month"));
+        $enddate = date("d.m.Y", strtotime("last day of -2 month"));
+    }
 ?>
 
   <div class="row" >
     <div class="col-md-9" style="width:100%;">
+      <div class="btn-group btn-group-justified">
+        <a class="btn btn-default btn-sm <?= $status_current ?>" role="button" href="?current">
+          <i class="fa fa-list-alt"></i> <?= lang('LIST_current'); ?></a>
+        <a class="btn btn-default btn-sm <?= $status_last_month ?>" role="button" id="link_out" href="?last_month">
+          <i class="fa fa-list-alt"></i> <?= lang('LIST_last_month'); ?></a>
+        <a class="btn btn-default btn-sm <?= $status_two_months_ago ?>" role="button" href="?two_months_ago">
+          <i class="fa fa-list-alt"></i> <?= lang('LIST_two_months_ago'); ?></a>
+      </div>
+
 <?php
     $user_id=id_of_user($_SESSION['helpdesk_user_login']);
     $unit_user=unit_of_user($user_id);
@@ -98,12 +109,13 @@ if (isset($_GET['two_months_ago'])) {
     }
 
     $aha = count($res1);
+
     if ($aha == "0") {
 ?>
-        <h5><center><?php echo lang('T_from') . ' ' . $startdate . ' ' . lang('T_to') . ' ' . $enddate ?></center></h5>
-        <div id="spinner" class="well well-large well-transparent lead">
-            <center><?=lang('MSG_no_records');?></center>
-        </div>
+      <h5><center><?php echo lang('T_from') . ' ' . $startdate . ' ' . lang('T_to') . ' ' . $enddate ?></center></h5>
+      <div id="spinner" class="well well-large well-transparent lead">
+        <center><?=lang('MSG_no_records');?></center>
+      </div>
 <?php
     } else if ($aha <> "0") {
 ?>

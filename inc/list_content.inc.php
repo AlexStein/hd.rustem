@@ -444,6 +444,7 @@ if (isset($_POST['menu'])) {
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
                             where unit_id IN (' . $in_query . ')  and arch=:n and status=:s
+                            order by prio desc, id desc
                             limit :start_pos, :perpage');
                     $paramss=array(':n'=>'0',':s'=>'1',':start_pos'=>$start_pos,':perpage'=>$perpage);
                     $stmt->execute(array_merge($vv,$paramss));}
@@ -453,6 +454,7 @@ if (isset($_POST['menu'])) {
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
                             where unit_id IN (' . $in_query . ')  and arch=:n and status=:s and lock_by=:lb
+                            order by prio desc, id desc
                             limit :start_pos, :perpage');
                     $paramss=array(':n'=>'0',':s'=>'0',':lb'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage);
                     $stmt->execute(array_merge($vv,$paramss));
@@ -462,7 +464,8 @@ if (isset($_POST['menu'])) {
                     $stmt = $dbConnection->prepare('SELECT
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
-                            where unit_id IN (' . $in_query . ')  and arch=:n and lock_by=:lb
+                            where unit_id IN (' . $in_query . ') and arch=:n and lock_by=:lb
+                            order by prio desc, id desc
                             limit :start_pos, :perpage');
                     $paramss=array(':n'=>'0',':lb'=>$user_id,':start_pos'=>$start_pos,':perpage'=>$perpage);
                     $stmt->execute(array_merge($vv,$paramss));}
@@ -471,6 +474,7 @@ if (isset($_POST['menu'])) {
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
                             where unit_id IN (' . $in_query . ')  and arch=:n and (lock_by<>:lb and lock_by<>0) and (status=0)
+                            order by prio desc, id desc
                             limit :start_pos, :perpage');
 
                     $paramss=array(':n'=>'0',':lb'=>$user_id,':start_pos'=>$start_pos,':perpage'=>$perpage);
@@ -482,7 +486,7 @@ if (isset($_POST['menu'])) {
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
                             where unit_id IN (' . $in_query . ')  and arch=:n
-                            order by ok_by asc, prio desc, id desc
+                            order by prio desc, id desc
                             limit :start_pos, :perpage');
 
                 $paramss=array(':n'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage);
@@ -499,6 +503,7 @@ if (isset($_POST['menu'])) {
                             from tickets
                             where ((user_to_id=:user_id and arch=:n) or
                             (user_to_id=:n1 and unit_id IN (' . $in_query . ') and arch=:n2)) and status=:s
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                     $paramss=array(':user_id'=>$user_id,':s'=>'1', ':n'=>'0',':n1'=>'0',':n2'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage);
                     $stmt->execute(array_merge($vv,$paramss));
@@ -510,6 +515,7 @@ if (isset($_POST['menu'])) {
                             from tickets
                             where ((user_to_id=:user_id and arch=:n) or
                             (user_to_id=:n1 and unit_id IN (' . $in_query . ') and arch=:n2)) and lock_by=:lb and status=:s
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                     $paramss=array(':user_id'=>$user_id,':lb'=>'0', ':s'=>'0', ':n'=>'0',':n1'=>'0',':n2'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage);
                     $stmt->execute(array_merge($vv,$paramss));
@@ -521,6 +527,7 @@ if (isset($_POST['menu'])) {
                             from tickets
                             where ((user_to_id=:user_id and arch=:n) or
                             (user_to_id=:n1 and unit_id IN (' . $in_query . ') and arch=:n2)) and lock_by=:lb
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                     $paramss=array(':user_id'=>$user_id,':lb'=>$user_id, ':n'=>'0',':n1'=>'0',':n2'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage);
                     $stmt->execute(array_merge($vv,$paramss));
@@ -531,6 +538,7 @@ if (isset($_POST['menu'])) {
                             from tickets
                             where ((user_to_id=:user_id and arch=:n) or
                             (user_to_id=:n1 and unit_id IN (' . $in_query . ') and arch=:n2)) and (lock_by<>:lb and lock_by<>0) and (status=0)
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                     $paramss=array(':user_id'=>$user_id,':lb'=>$user_id, ':n'=>'0',':n1'=>'0',':n2'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage);
                     $stmt->execute(array_merge($vv,$paramss));
@@ -543,7 +551,7 @@ if (isset($_POST['menu'])) {
                             from tickets
                             where ((user_to_id=:user_id and arch=:n) or
                             (user_to_id=:n1 and unit_id IN (' . $in_query . ') and arch=:n2))
-                            order by ok_by asc, prio desc, id desc
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                 $paramss=array(':user_id'=>$user_id, ':n'=>'0',':n1'=>'0',':n2'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage);
                 $stmt->execute(array_merge($vv,$paramss));
@@ -559,6 +567,7 @@ if (isset($_POST['menu'])) {
                             from tickets
                             where arch=:n
                             and status=:s
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                             $stmt->execute(array(':n'=>'0',':s'=>'1',':start_pos'=>$start_pos,':perpage'=>$perpage));
 
@@ -568,6 +577,7 @@ if (isset($_POST['menu'])) {
                             from tickets
                             where arch=:n
                             and lock_by=:lb and status=:s
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                             $stmt->execute(array(':n'=>'0',':s'=>'0',':lb'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage));}
 
@@ -577,6 +587,7 @@ if (isset($_POST['menu'])) {
                             from tickets
                             where arch=:n
                             and lock_by=:lb
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                     $stmt->execute(array(':n'=>'0',':lb'=>$user_id,':start_pos'=>$start_pos,':perpage'=>$perpage));}
                 else if ($_SESSION['hd.rustem_sort_in'] == "lock") {
@@ -585,6 +596,7 @@ if (isset($_POST['menu'])) {
                             from tickets
                             where arch=:n
                             and (lock_by<>:lb and lock_by<>0) and (status=0)
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                     $stmt->execute(array(':n'=>'0',':lb'=>$user_id,':start_pos'=>$start_pos,':perpage'=>$perpage));
                 }
@@ -594,7 +606,7 @@ if (isset($_POST['menu'])) {
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
                             where arch=:n
-                            order by ok_by asc, prio desc, id desc
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                 $stmt->execute(array(':n'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage));
             }

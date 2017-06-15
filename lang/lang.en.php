@@ -18,7 +18,7 @@ function lang ($phrase) {
 
 'REPORT_main'=>'Tickets report',
 'REPORT_help'=>'This section contains statistics of all departments and their users for which you have permissions.',
-'REPORT_unit_ago'=>'Trickets for',
+'REPORT_unit_ago'=>'Trickets for last',
 
 'NAVBAR_files'=>'Ticket\' files',
 'T_from'=>'from',
