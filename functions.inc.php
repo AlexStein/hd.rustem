@@ -3,7 +3,7 @@ include_once('conf.php');
 include_once('sys/class.phpmailer.php');
 include_once('sys/Parsedown.php');
 require 'library/HTMLPurifier.auto.php';
-date_default_timezone_set('Europe/Kiev');
+date_default_timezone_set('Europe/Moscow');
 $dbConnection = new PDO('mysql:host=' . $CONF_DB['host'] . ';dbname=' . $CONF_DB['db_name'], $CONF_DB['username'], $CONF_DB['password'], array(
     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
 ));
@@ -392,11 +392,11 @@ function make_html($in, $type='yes')
     $content = $purifier->purify($text);
     return $content;
 }
+
 function view_comment($tid)
 {
     global $dbConnection;
 ?>
-
         <div class="row" id="comment_body" style="max-height: 400px; scroll-behavior: initial; overflow-y: scroll;">
         <div class="timeline-centered">
         <?php
@@ -406,26 +406,21 @@ function view_comment($tid)
     ));
     while ($rews = $stmt->fetch(PDO::FETCH_ASSOC)) {
 ?>
-
         <article class="timeline-entry">
-
             <div class="timeline-entry-inner">
-
                 <div class="timeline-icon bg-info">
                     <i class="entypo-feather"></i>
                 </div>
-
                 <div class="timeline-label">
-                                                    <div class="header">
-                                    <strong class="primary-font"><?= nameshort(name_of_user_ret($rews['user_id'])); ?></strong> <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>
-                                        <time id="b" datetime="<?= $rews['dt']; ?>"></time> <time id="c" datetime="<?= $rews['dt']; ?>"></time></small>
-
-                                </div><br>
-                    <p><?= make_html($rews['comment_text'], true); ?></p>
+                  <div class="header">
+                    <strong class="primary-font"><?= nameshort(name_of_user_ret($rews['user_id'])); ?></strong> <small class="pull-right text-muted">
+                      <span class="glyphicon glyphicon-time"></span>
+                      <time id="b" datetime="<?= $rews['dt']; ?>"></time> <time id="c" datetime="<?= $rews['dt']; ?>"></time></small>
+                  </div>
+                  <br>
+                  <p><?= make_html($rews['comment_text'], "no"); ?></p>
                 </div>
             </div>
-
         </article>
         <?php
     }

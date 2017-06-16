@@ -444,7 +444,7 @@ if (isset($_POST['menu'])) {
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
                             where unit_id IN (' . $in_query . ')  and arch=:n and status=:s
-                            order by prio desc, id desc
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                     $paramss=array(':n'=>'0',':s'=>'1',':start_pos'=>$start_pos,':perpage'=>$perpage);
                     $stmt->execute(array_merge($vv,$paramss));}
@@ -454,7 +454,7 @@ if (isset($_POST['menu'])) {
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
                             where unit_id IN (' . $in_query . ')  and arch=:n and status=:s and lock_by=:lb
-                            order by prio desc, id desc
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                     $paramss=array(':n'=>'0',':s'=>'0',':lb'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage);
                     $stmt->execute(array_merge($vv,$paramss));
@@ -465,7 +465,7 @@ if (isset($_POST['menu'])) {
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
                             where unit_id IN (' . $in_query . ') and arch=:n and lock_by=:lb
-                            order by prio desc, id desc
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
                     $paramss=array(':n'=>'0',':lb'=>$user_id,':start_pos'=>$start_pos,':perpage'=>$perpage);
                     $stmt->execute(array_merge($vv,$paramss));}
@@ -474,7 +474,7 @@ if (isset($_POST['menu'])) {
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
                             where unit_id IN (' . $in_query . ')  and arch=:n and (lock_by<>:lb and lock_by<>0) and (status=0)
-                            order by prio desc, id desc
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
 
                     $paramss=array(':n'=>'0',':lb'=>$user_id,':start_pos'=>$start_pos,':perpage'=>$perpage);
@@ -486,7 +486,7 @@ if (isset($_POST['menu'])) {
                             id, user_init_id, user_to_id, date_create, subj, msg, client_id, unit_id, status, hash_name, is_read, lock_by, ok_by, prio, last_update
                             from tickets
                             where unit_id IN (' . $in_query . ')  and arch=:n
-                            order by prio desc, id desc
+                            order by status asc, prio desc, id desc
                             limit :start_pos, :perpage');
 
                 $paramss=array(':n'=>'0',':start_pos'=>$start_pos,':perpage'=>$perpage);
