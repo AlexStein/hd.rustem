@@ -336,7 +336,7 @@ CREATE TABLE `users` (
   `pass` varchar(64) NOT NULL DEFAULT '',
   `status` int(11) NOT NULL DEFAULT '1',
   `priv` int(11) DEFAULT '0',
-  `unit` varchar(11) NOT NULL DEFAULT '0',
+  `unit` varchar(255) NOT NULL DEFAULT '0',
   `is_admin` int(4) NOT NULL DEFAULT '0',
   `email` varchar(128) DEFAULT NULL,
   `messages` varchar(2048) NOT NULL DEFAULT '',

@@ -2354,19 +2354,19 @@ values (:unlock, now(), :unow, :tid)');
             }
             if (strlen($_POST['pass']) > 1) {
                 $p    = md5($_POST['pass']);
-                $stmt = $dbConnection->prepare('update users set 
-                fio=:fio, 
+                $stmt = $dbConnection->prepare('UPDATE users SET
+                fio=:fio,
                 login=:login,
                 pass=:pass,
-                status=:status, 
-                priv=:priv, 
-                unit=:unit, 
-                email=:mail, 
-                messages=:mess, 
-                lang=:lang, 
+                status=:status,
+                priv=:priv,
+                unit=:unit,
+                email=:mail,
+                messages=:mess,
+                lang=:lang,
                 priv_add_client=:priv_add_client,
-                priv_edit_client=:priv_edit_client  
-                where id=:usid');
+                priv_edit_client=:priv_edit_client
+                WHERE id=:usid');
                 $stmt->execute(array(
                     ':fio' => $fio,
                     ':login' => $login,
@@ -2383,7 +2383,18 @@ values (:unlock, now(), :unow, :tid)');
                 ));
             } else {
                 $p    = "";
-                $stmt = $dbConnection->prepare('update users set fio=:fio, login=:login, status=:status, priv=:priv, unit=:unit, email=:mail, messages=:mess, lang=:lang, priv_add_client=:priv_add_client,priv_edit_client=:priv_edit_client where id=:usid');
+                $stmt = $dbConnection->prepare('UPDATE users SET
+                fio=:fio,
+                login=:login,
+                status=:status,
+                priv=:priv,
+                unit=:unit,
+                email=:mail,
+                messages=:mess,
+                lang=:lang,
+                priv_add_client=:priv_add_client,
+                priv_edit_client=:priv_edit_client
+                WHERE id=:usid');
                 $stmt->execute(array(
                     ':fio' => $fio,
                     ':login' => $login,
