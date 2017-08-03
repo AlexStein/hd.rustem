@@ -568,10 +568,10 @@ $(document).ready(function() {
             easing: 'swing',
             speed: 500
         },
-        timeout: false,
+        timeout: 1800000,
         force: false,
         modal: false,
-        maxVisible: 5,
+        maxVisible: 2,
         killer: false,
         closeWith: ['click'],
         callback: {
