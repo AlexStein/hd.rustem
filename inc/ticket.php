@@ -550,13 +550,13 @@ if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
                                         </div>
                                       </div>
                                       <!-- The table listing the files available for upload/download -->
-                                      <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table> 
+                                      <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
                                     </form>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          <?php } ?>      
+                          <?php } ?>
                       </div>
                       <div class="form-group" id="for_msg">
                         <label for="msg" class="col-sm-3 control-label"><small><?=lang('TICKET_t_your_comment');?>:</small></label>

@@ -120,7 +120,7 @@ if (isset($_POST['mode'])) {
   <h1>HD.rustem <small>установка системы</small></h1>
 </div>
 		<div class="row">
-		
+
 		<div class="col-md-12">
 		<div class="panel panel-default">
   <div class="panel-heading">
@@ -141,9 +141,10 @@ $mysql_password = $_POST['password'];
 // Database name
 $mysql_database = $_POST['db'];
 // Connect to MySQL server
-mysql_connect($mysql_host, $mysql_username, $mysql_password) or die('Error connecting to MySQL server: ' . mysql_error());
+$link = mysqli_connect($mysql_host, $mysql_username, $mysql_password, $mysql_database) or die('Error connecting to MySQL server: ' . mysqli_error());
 // Select database
-mysql_select_db($mysql_database) or die('Error selecting MySQL database: ' . mysql_error());
+// Не требуется так как выбираем строкой выше
+//mysqli_select_db($mysql_database) or die('Error selecting MySQL database: ' . mysqli_error());
 
 // Temporary variable, used to store current query
 $templine = '';
@@ -162,7 +163,7 @@ $templine .= $line;
 if (substr(trim($line), -1, 1) == ';')
 {
     // Perform the query
-    mysql_query($templine) or print('Error performing query \'<strong>' . $templine . '\': ' . mysql_error() . '<br /><br />');
+    mysqli_query($link, $templine) or print('Error performing query \'<strong>' . $templine . '\': ' . mysqli_error() . '<br /><br />');
     // Reset temp variable to empty
     $templine = '';
 }
@@ -195,8 +196,8 @@ file_put_contents($fileconf, $current);
 
 $pos = strrpos($_SERVER['REQUEST_URI'], '/');
 $sys_url= "http://".$_SERVER['HTTP_HOST'].substr($_SERVER['REQUEST_URI'], 0, $pos + 1);
-      
-mysql_query("update perf set value='$sys_url' where param='hostname'")or die("Invalid query: " . mysql_error());
+
+mysqli_query($link, "update perf set value='$sys_url' where param='hostname'")or die("Invalid query: " . mysqli_error());
 ?>
 <h2>Поздравляем Вас с успешной установкой!</h2>
 Вы можете войти в систему по адресу: <a href="<?=$sys_url;?>"><?=$sys_url;?></a>,<br> используя логин: <strong>system</strong> и пароль: <strong>1234</strong>.<br>
@@ -226,13 +227,12 @@ mysql_query("update perf set value='$sys_url' where param='hostname'")or die("In
 else if (!isset($_POST['mode'])) {
 if (isset($_GET['mode'])) {
 		if ($_GET['mode'] == 'db_install' ) { ?>
-		
+
 		<div class="container" id="content">
 		<div class="page-header">
   <h1>HD.rustem <small>подготовка к установке</small></h1>
 </div>
 		<div class="row">
-		
 		<div class="col-md-12">
 		<div class="panel panel-default">
   <div class="panel-heading">
@@ -241,7 +241,6 @@ if (isset($_GET['mode'])) {
   <div class="panel-body">
 
 <form class="form-horizontal" role="form" action="index.php" method="post">
-    
     <div class="form-group">
     <label for="host" class="col-sm-4 control-label"><small>Адрес MySQL-сервера</small></label>
     <div class="col-sm-8">
@@ -257,9 +256,6 @@ if (isset($_GET['mode'])) {
 
    </div>
   </div>
-  
-  
-  
       <div class="form-group">
     <label for="password" class="col-sm-4 control-label"><small>Пароль</small></label>
     <div class="col-sm-8">
@@ -267,8 +263,6 @@ if (isset($_GET['mode'])) {
 
    </div>
   </div>
-  
-  
         <div class="form-group">
     <label for="db" class="col-sm-4 control-label"><small>Имя БД</small></label>
     <div class="col-sm-8">
@@ -276,7 +270,6 @@ if (isset($_GET['mode'])) {
 
    </div>
   </div>
-  
 
 <center>
 <input type="hidden" name="mode" value="1">
@@ -292,19 +285,15 @@ if (isset($_GET['mode'])) {
 		</div>
 
 
-		
-		<?php
-		
+<?php
 		}
-	if ($_GET['mode'] == 'check_install' ) { 
-		
+	if ($_GET['mode'] == 'check_install' ) {
 		?>
 		<div class="container" id="content">
 		<div class="page-header">
   <h1>HD.rustem <small>подготовка к установке</small></h1>
 </div>
 		<div class="row">
-		
 		<div class="col-md-12">
 		<div class="panel panel-default">
   <div class="panel-heading">

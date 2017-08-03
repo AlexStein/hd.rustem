@@ -1,7 +1,6 @@
-<?php 
+<?php
 function lang ($phrase) {
 	static $lang = array (
-	
 'ALLSTATS_main' => 'General Statistics',
 'ALLSTATS_help' => 'This section contains statistics of all departments and their users for which you have permissions.',
 'ALLSTATS_unit' => 'Information about the applications of your departments',
@@ -16,11 +15,14 @@ function lang ($phrase) {
 'ALLSTATS_user_out_all' => 'Create (of)',
 'ALLSTATS_user_out_all_not' => 'Create (not performance)',
 'stats_last_time'=>'Last login: ',
-	
-	
-	
-	'NAVBAR_files'=>'Ticket\' files',  
+
+'REPORT_main'=>'Tickets report',
+'REPORT_help'=>'This section contains statistics of all departments and their users for which you have permissions.',
+'REPORT_unit_ago'=>'Trickets for last',
+
+'NAVBAR_files'=>'Ticket\' files',
 'T_from'=>'from',
+'T_to'=>'to',
 'FILES_title' => 'Files of applications',
 'FILES_off' => 'Currently disabled downloading files to applications. To activate,  <a href="./config">go here </a> and activate downloading files to the application. ',
 'FILES_info' => 'In this section you can view all the attachments to the applications, as well as remove them.',
@@ -32,14 +34,12 @@ function lang ($phrase) {
 
 'CONF_file_types'=>'Permitted file types',
 'CONF_file_size'=>'Maximum file size',
-	
-	
-	 'DEPS_off'=>'Currently disabled fixed list of those applications. To enable it,  <a href="./config">go here </a> applications and select the theme "fixity" list.', 
-	 
+
+'DEPS_off'=>'Currently disabled fixed list of those applications. To enable it,  <a href="./config">go here </a> applications and select the theme "fixity" list.',
+
 'TICKET_t_a_e_prio'=>'in the application has been changed the priority',
 
-	 
-	    'CONF_info'=>'This section contains the basic system configuration.',
+'CONF_info'=>'This section contains the basic system configuration.',
 'CONF_title' => 'System Settings',
 'CONF_mains' => 'General Settings',
 'CONF_name' => 'Name of Organization',
@@ -70,18 +70,15 @@ function lang ($phrase) {
 'CONF_mail_pass' => 'Password',
 'CONF_mail_from' => 'Opravitel',
 'CONF_mail_debug' => 'Debug mode',
- 'CONF_mail'=>'E-mail of admin',
-	'CONF_mail_type'=>'Type',
-	 'HELPER_info'=>'This section can contain instructions and documentation for solutions to common problems.',
-	
-	
-	
-	
-	'LIST_pin' => 'Units',
-	'DASHBOARD_TITLE' => 'Dashboard',
-	'DASHBOARD_ticket_stats' => 'Statistics Tickets',
-	'DASHBOARD_ticket_in_desc' => 'Incoming free Ticket that you can take',
-	'DASHBOARD_ticket_in' => 'incoming requests',
+'CONF_mail'=>'E-mail of admin',
+'CONF_mail_type'=>'Type',
+'HELPER_info'=>'This section can contain instructions and documentation for solutions to common problems.',
+
+'LIST_pin' => 'Units',
+'DASHBOARD_TITLE' => 'Dashboard',
+'DASHBOARD_ticket_stats' => 'Statistics Tickets',
+'DASHBOARD_ticket_in_desc' => 'Incoming free Ticket that you can take',
+'DASHBOARD_ticket_in' => 'incoming requests',
 'DASHBOARD_ticket_lock' => 'blocked me',
 'DASHBOARD_ticket_lock_desc' => 'Ticket with which you are working',
 'DASHBOARD_ticket_out' => 'outgoing ticket',
@@ -135,6 +132,9 @@ function lang ($phrase) {
 'LIST_out' => 'Outgoing',
 'LIST_arch' => 'Archive',
 'LIST_loading' => 'Loading',
+'LIST_current'=>'Current',
+'LIST_last_month'=>'Last month',
+'LIST_two_months_ago'=>'Two months ago',
 'CREATE_ACC_success' =>' Your account has been successfully activated! <br> to your email sent to your login and password. ',
 'msg_created_new_user' => 'This will create a new user',
 'CREATE_ACC_already' => 'Your account has been activated.',
@@ -147,39 +147,39 @@ function lang ($phrase) {
 'error_auth' => 'Error. <br> Check username and password. ',
 'first_in_auth' => 'The first input and activation',
 'user_auth' => 'User activation',
-'work_mail' => 'your desktop e-mail', 
+'work_mail' => 'your desktop e-mail',
 'action_auth' => 'Activate',
 'log_in' => 'Login',
-'work_mail_ph' => 'Enter your work e-mail (e-mail).', 
+'work_mail_ph' => 'Enter your work e-mail (e-mail).',
 'NOTES_single' => 'Record ...',
 't_LIST_prio' => 'Priority',
-'t_LIST_subj' => 'Subject', 
-// <? = Lang ('t_LIST_prio'); 
+'t_LIST_subj' => 'Subject',
+// <? = Lang ('t_LIST_prio');
 't_LIST_worker' => 'User',
 't_LIST_create' => 'Created',
 't_LIST_ago' => 'passed',
 't_LIST_init' => 'Author',
-'t_LIST_to' => 'Receiver' 
-,'t_LIST_status' => 'Status' 
-,'t_LIST_action' => 'Action' 
-,'t_list_a_nook' => 'mark is formed' 
-,'t_list_a_unlock' => 'unlock' 
-,'t_list_a_lock' => 'block' 
-,'t_list_a_ok' => 'execute' 
-,'t_list_a_all' => 'All' 
-,'t_list_a_user_ok' => 'Completed' 
-,'t_list_a_date_ok' => 'Done' 
-,'t_list_a_p_norm' => 'medium priority' 
-,'t_list_a_p_low' => 'low priority' 
-,'t_list_a_p_high' => 'high priority' 
-,'t_list_a_oko' => 'satisfied' 
-,'t_list_a_arch' => 'archive' 
-,'t_list_a_lock_i' => 'I work' 
-,'t_list_a_lock_u' => 'works' 
-,'t_list_a_hold' => 'expectations of action' 
-,'t_list_a_ok_no' => 'yes / no' 
+'t_LIST_to' => 'Receiver',
+'t_LIST_status' => 'Status',
+'t_LIST_action' => 'Action',
+'t_list_a_nook' => 'mark is formed',
+'t_list_a_unlock' => 'unlock',
+'t_list_a_lock' => 'block',
+'t_list_a_ok' => 'execute',
+'t_list_a_all' => 'All',
+'t_list_a_user_ok' => 'Completed',
+'t_list_a_date_ok' => 'Done',
+'t_list_a_p_norm' => 'medium priority',
+'t_list_a_p_low' => 'low priority',
+'t_list_a_p_high' => 'high priority',
+'t_list_a_oko' => 'satisfied',
+'t_list_a_arch' => 'archive',
+'t_list_a_lock_i' => 'I work',
+'t_list_a_lock_u' => 'works',
+'t_list_a_hold' => 'expectations of action',
+'t_list_a_ok_no' => 'yes / no',
 
-,'HELP_desc' => 'Description of the problem' 
+'HELP_desc' => 'Description of the problem' 
 ,'HELP_do' => 'Solution' 
 ,'HELP_save' => 'Save' 
 ,'HELP_back' => 'Back' 
@@ -187,7 +187,6 @@ function lang ($phrase) {
 ,'HELP_create' => 'Create' 
 ,'MSG_no_records' => 'No entries' 
 ,'TICKET_name' => 'Ticket' 
-
 
 ,'TICKET_p_add_client'=>'Add clients',
 'TICKET_p_edit_client'=>'Edit clients'
@@ -302,6 +301,7 @@ function lang ($phrase) {
 ,'NAVBAR_approve' => 'Confirm' 
 ,'NAVBAR_all_tickets' => 'All Tickets' 
 ,'NAVBAR_reports' => 'Reports' 
+,'NAVBAR_report' => 'Report' 
 ,'NAVBAR_db' => 'Directories' 
 ,'NAVBAR_posads' => 'Posts' 
 ,'NAVBAR_units' => 'Manage' 
@@ -448,104 +448,102 @@ function lang ($phrase) {
 ,'SUBJ_action' => 'Action' 
 
 
-,'STATS_TITLE' => 'User statistics' 
-,'STATS_in' => 'Incoming ticket' 
-,'STATS_out' => 'Outgoing ticket' 
-,'STATS_new' => 'New' 
-,'STATS_lock' => 'with which to work' 
-,'STATS_ok' => 'Achieved me' 
-,'STATS_nook' => 'not made​​' 
-,'STATS_create' => 'Created by Me' 
-,'STATS_lock_o' => 'Work' 
-,'STATS_ok_o' => 'Done' 
-,'STATS_help1' => '<li> new - requests that are addressed to you or your department and you can meet them. </ li> <li> Blocked - Ticket you are working on. </ li> <li> Fulfilled - requests that you have already completed (after a while go into the archive and disappear on schedule) </ li> '
-,'STATS_help2' => '<li> not made ​​- requests that you have created, but no one has yet performed. </ li> <li> Blocked - orders, over which someone works. </ li> <li> Fulfilled - requests that you have created and executed </ li> ' 
-,'STATS_in_now' => 'Inbox Ticket now' 
-,'STATS_t' => 'Tickets' 
-,'STATS_t_ok' => 'Completed' 
-,'STATS_t_free' => 'Free' 
-,'STATS_out_all' => 'Outgoing Tickets for the entire period' 
-,'STATS_t_lock' => 'with which to work', 
+'STATS_TITLE' => 'User statistics',
+'STATS_in' => 'Incoming ticket',
+'STATS_out' => 'Outgoing ticket',
+'STATS_new' => 'New',
+'STATS_lock' => 'with which to work',
+'STATS_ok' => 'Achieved me',
+'STATS_nook' => 'not made​​',
+'STATS_create' => 'Created by Me',
+'STATS_lock_o' => 'Work',
+'STATS_ok_o' => 'Done',
+'STATS_help1' => '<li> new - requests that are addressed to you or your department and you can meet them. </li> <li> Blocked - Ticket you are working on. </ li> <li> Fulfilled - requests that you have already completed (after a while go into the archive and disappear on schedule) </li>',
+'STATS_help2' => '<li> not made ​​- requests that you have created, but no one has yet performed. </li> <li> Blocked - orders, over which someone works. </ li> <li> Fulfilled - requests that you have created and executed </li> ',
+'STATS_in_now' => 'Inbox Ticket now',
+'STATS_t' => 'Tickets',
+'STATS_t_ok' => 'Completed',
+'STATS_t_free' => 'Free',
+'STATS_out_all' => 'Outgoing Tickets for the entire period',
+'STATS_t_lock' => 'with which to work',
 
 
 
-'DASHBOARD_def_msg' => ', welcome to the Ticket system </strong> </center> <br> recommend you see <a href=\'help\' class=\'alert-link\'> </i > Directions </a> at work system. <br> <a href=\'create\'class=\'alert-link\'> Or create a new Ticket </a> right now! ',
+'DASHBOARD_def_msg' => ', welcome to the Ticket system </strong> </center> <br> recommend you see <a href=\'help\' class=\'alert-link\'> </i > Directions </a> at work system. <br> <a href=\'create\'class=\'alert-link\'> Or create a new Ticket </a> right now!',
 
-'msg_creted_new_user' => 'new user will be wound up.'
+'msg_creted_new_user' => 'new user will be wound up.',
 
+'MAIL_active' => 'Account activated',
+'MAIL_adr' => 'Address',
+'MAIL_active_u' => 'The user account is activated',
+'MAIL_cong' => 'Welcome to Ticket System',
+'MAIL_data' => 'data',
+'MAIL_name' => 'System Tickets',
+'MAIL_new' => 'NEW ORDER',
+'MAIL_code' => 'Request Code',
+'MAIL_2link' => 'Go to page Ticket',
+'MAIL_info' => 'Information',
+'MAIL_created' => 'Ticket created',
+'MAIL_to' => 'To',
+'MAIL_prio' => 'Priority',
+'MAIL_worker' => 'Employee',
+'MAIL_msg' => 'Message',
+'MAIL_subj' => 'Subject',
+'MAIL_text' => 'text',
+'t_LIST_worker_to' => 'employee',
+'t_LIST_person' => 'personal',
+'MAIL_updated' => 'ORDER UPDATED',
+'MAIL_author' => 'User',
+'MAIL_comment' => 'Comment',
 
-,'MAIL_active' => 'Account activated' 
-,'MAIL_adr' => 'Address' 
-,'MAIL_active_u' => 'The user account is activated' 
-,'MAIL_cong' => 'Welcome to Ticket System' 
-,'MAIL_data' => 'data' 
-,'MAIL_name' => 'System Tickets' 
-,'MAIL_new' => 'NEW ORDER' 
-,'MAIL_code' => 'Request Code' 
-,'MAIL_2link' => 'Go to page Ticket' 
-,'MAIL_info' => 'Information' 
-,'MAIL_created' => 'Ticket created' 
-,'MAIL_to' => 'To' 
-,'MAIL_prio' => 'Priority' 
-,'MAIL_worker' => 'Employee' 
-,'MAIL_msg' => 'Message' 
-,'MAIL_subj' => 'Subject' 
-,'MAIL_text' => 'text' 
-,'t_LIST_worker_to' => 'employee' 
-,'t_LIST_person' => 'personal' 
-,'MAIL_updated' => 'ORDER UPDATED'
-,'MAIL_author' => 'User'
-,'MAIL_comment' => 'Comment'
-
-,'HELP_title' => 'How to work with the Tickets' 
-,'HELP_new' => 'Create Ticket' 
-,'HELP_review' => 'View Ticket' 
-,'HELP_edit_user' => 'Change the user information' 
-,'HELP_new_text' => '<p> To create an Ticket, you must fill out the required fields. 
-                                 </ p> 
-                                 <ol> 
-                                     <li> <strong> From </ strong> - You need to start typing part of the surname, first name or username. If such employee is already in the system, then you will automatically be prompted to select from the list. If it is not - it will be created. In the right part of the page, you can optionally specify the contact details for the person. Typically a contact telephone number, e. </ Li> 
-                                     <li> <strong> Who </ strong> - specifies department. Be sure to specify the department, as well as optional receiver. If you specify only the department, then the Ticket will see all employees of the department. If you specify more and performer, then the Ticket will only see receiver and the head of his department. </ Li> 
-                                     <li> <strong> Priority </ strong> - specifies the priority of the Ticket. The general list Ticket can be seen by certain marks. </ Li> 
-                                     <li> <strong> Subject </ strong> - briefly stated theme of the Ticket. </ li> 
-                                     <li> <strong> Message </ strong> - specifies in detail the essence of the Ticket. </ li> 
-                                 </ ol> ', 
-'HELP_review_text' => '<p> you are three "directory", "Inbox", "Outbox", "archive". Details are below. 
-                                 </ p> 
-                                 <ul> 
-                                     <li> <strong> Inbox </ strong> - This directory contains all Ticket directly targeting you or your department. 
-If you are an user - you only see Tickets targeting the entire department or directly to you. (requests addressed to you and the department). 
-If you are an head of the department - you can see all your Tickets department (addressed to you, the users, and department). 
-                                     </ li> 
-                                     <li> <strong> Outgoing </ strong> - This directory contains all the Tickets that you have created. You can view the status of your Tickets created. 
-                                     </ li> 
-                                     <li> <strong> Archive </ strong> - This directory contains all Tickets that have been made​​, and some time later moved to the archive. They go to the archive automatically. 
-                                     </ li> 
-                                 </ ul> 
-                                 <p> 
-                                     The list of Tickets having different colors, in order to see their status. If the Ticket is black color - it will not be read. Blue - expect action. Yellow - blocked you. Gray - blocked by the user. Green - the Ticket is made. 
-                                 </ p> 
-                                 <center> 
-                                 <img src="img/help3.png" class="img-responsive"> 
-                                 </ center> 
-                                 <p> 
-                                     <strong> Once you or your department received a new Ticket </ strong>, you need to see it by clicking on the topic and decide: 
-                                 <ul> 
-                                     <li> <strong> Diversion to another department / or user </ strong> - If the Ticket is not in your jurisdiction, you can transfer the Ticket to another department or person. 
-                                     </ li> 
-                                     <li> <strong> Block it </ strong> - for all to see that you are working at this time with the Ticket, and other users can not do anything with the Ticket except the department head. 
-                                     <li> <strong> Run it </ strong> - means a request fulfilled and after a while it gets to the archive </ li> 
-
-                                         </ ul> 
-                                     </ li> 
-                                 </ ul> 
-                                 </ p> 
-                                 <p> 
-                                     Also you can comment on the proposal. 
-                                 </ p> ', 
-'HELP_edit_user_text' => '<p> Sometimes you need to add information about the user or change it. 
-To do this, there is a section - Members. Locate the user that you need and change the data. After that, they will be tested by the system administrator and change. 
-                                 </ p> ', 
+'HELP_title' => 'How to work with the Tickets',
+'HELP_new' => 'Create Ticket',
+'HELP_review' => 'View Ticket',
+'HELP_edit_user' => 'Change the user information',
+'HELP_new_text' => '<p> To create an Ticket, you must fill out the required fields.
+                                 </p>
+                                 <ol>
+                                     <li> <strong> From </ strong> - You need to start typing part of the surname, first name or username. If such employee is already in the system, then you will automatically be prompted to select from the list. If it is not - it will be created. In the right part of the page, you can optionally specify the contact details for the person. Typically a contact telephone number, e. </li>
+                                     <li> <strong> Who </ strong> - specifies department. Be sure to specify the department, as well as optional receiver. If you specify only the department, then the Ticket will see all employees of the department. If you specify more and performer, then the Ticket will only see receiver and the head of his department. </li>
+                                     <li> <strong> Priority </ strong> - specifies the priority of the Ticket. The general list Ticket can be seen by certain marks. </li>
+                                     <li> <strong> Subject </ strong> - briefly stated theme of the Ticket. </li>
+                                     <li> <strong> Message </ strong> - specifies in detail the essence of the Ticket. </li>
+                                 </ol> ',
+'HELP_review_text' => '<p> you are three "directory", "Inbox", "Outbox", "archive". Details are below.
+                                 </p>
+                                 <ul>
+                                     <li> <strong> Inbox </ strong> - This directory contains all Ticket directly targeting you or your department.
+If you are an user - you only see Tickets targeting the entire department or directly to you. (requests addressed to you and the department).
+If you are an head of the department - you can see all your Tickets department (addressed to you, the users, and department).
+                                     </li>
+                                     <li> <strong> Outgoing </ strong> - This directory contains all the Tickets that you have created. You can view the status of your Tickets created.
+                                     </li>
+                                     <li> <strong> Archive </ strong> - This directory contains all Tickets that have been made​​, and some time later moved to the archive. They go to the archive automatically.
+                                     </li>
+                                 </ul>
+                                 <p>
+                                     The list of Tickets having different colors, in order to see their status. If the Ticket is black color - it will not be read. Blue - expect action. Yellow - blocked you. Gray - blocked by the user. Green - the Ticket is made.
+                                 </ p>
+                                 <center>
+                                 <img src="img/help3.png" class="img-responsive">
+                                 </center>
+                                 <p>
+                                     <strong> Once you or your department received a new Ticket </ strong>, you need to see it by clicking on the topic and decide:
+                                 <ul>
+                                     <li> <strong> Diversion to another department / or user </ strong> - If the Ticket is not in your jurisdiction, you can transfer the Ticket to another department or person.
+                                     </li>
+                                     <li> <strong> Block it </ strong> - for all to see that you are working at this time with the Ticket, and other users can not do anything with the Ticket except the department head.
+                                     <li> <strong> Run it </ strong> - means a request fulfilled and after a while it gets to the archive </ li>
+                                         </ul>
+                                     </li>
+                                 </ul>
+                                 </p>
+                                 <p>
+                                     Also you can comment on the proposal.
+                                 </ p> ',
+'HELP_edit_user_text' => '<p> Sometimes you need to add information about the user or change it.
+To do this, there is a section - Members. Locate the user that you need and change the data. After that, they will be tested by the system administrator and change.
+                                 </ p> ',
 'SYSTEM_lang'=>'Language',
 'summernote_lang'=> 'en-US',
 'note_save'=>'Record saved',
@@ -571,6 +569,6 @@ To do this, there is a section - Members. Locate the user that you need and chan
 ''=>''
 );
 return isset($lang[$phrase]) ? $lang[$phrase] : 'undefined';
-//return $lang[$phrase]; 
-} 
+//return $lang[$phrase];
+}
 ?>

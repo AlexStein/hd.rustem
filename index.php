@@ -18,13 +18,8 @@ if (isset($CONF_DB)) {
         unset($_COOKIE['authhash_code']);
         session_regenerate_id();
         header("Location: ".$CONF['hostname']);
-        //setcookie('id', '', 0, "/");
-        //setcookie('ps', '', 0, "/");
-        // ТУТ УДАЛИТЬ КУКИ
-
     }
 
-    //echo($_COOKIE['authhash_code']);
     $rq=0;
     if (isset($_POST['login']) && isset($_POST['password'])) {
         $rq=1;
@@ -35,46 +30,36 @@ if (isset($CONF_DB)) {
 
         $stmt = $dbConnection->prepare('SELECT id,login,fio from users where login=:login AND pass=:pass AND status=1');
         $stmt->execute(array(':login' => $login, ':pass' => $password));
-        
-        
+
         if ($stmt -> rowCount() == 1) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-            //session_regenerate_id();
             $_SESSION['helpdesk_user_id'] = $row['id'];
             $_SESSION['helpdesk_user_login'] = $row['login'];
             $_SESSION['helpdesk_user_fio'] = $row['fio'];
 
             $_SESSION['code'] = md5($password);
             if ($rm == "1") {
-            
                 setcookie('authhash_uid', $_SESSION['helpdesk_user_id'], time()+60*60*24*7);
                 setcookie('authhash_code', $_SESSION['code'], time()+60*60*24*7);
             }
-        }
-        else {
+        } else {
             $va='error';
         }
     }
 
-    //if (isset($_SESSION['code']) ) { 
     if (validate_user($_SESSION['helpdesk_user_id'], $_SESSION['code'])) {
         $url = parse_url($CONF['hostname']);
 
-        if ($rq==1) {	
+        if ($rq==1) {
             if (isset($url['port'])) {
                 header("Location: http://".$url['host'].":".$url['port'].$req_url);
-            } 
-            else {
+            } else {
                 header("Location: http://".$url['host'].$req_url);
             }
         }
         if ($rq==0) {
-        
-        
-            if (!isset($_GET['page'])) {        
-            
+            if (!isset($_GET['page'])) {
                 include("inc/head.inc.php");
                 include("inc/navbar.inc.php");
                 include("inc/dashboard.php");
@@ -82,7 +67,6 @@ if (isset($CONF_DB)) {
             }
 
             if (isset($_GET['page'])) {
-
                 switch($_GET['page']) {
                     case 'create': 	include('inc/new.php');		break;
                     case 'list': 	include('inc/list.php');	break;
@@ -102,10 +86,11 @@ if (isset($CONF_DB)) {
                     case 'userinfo':include('inc/userinfo.php');break;
                     case 'config':	include('inc/perf.php');	break;
                     case 'files':	include('inc/files.php');	break;
-                    case 'main_stats':	include('inc/all_stats.php');	break;
+                    case 'main_stats': include('inc/all_stats.php');	break;
+                    case 'ticket_report': include('inc/ticket_report.php');	break;
                     case 'print_ticket': include('inc/print_ticket.php');	break;
                     default: include('404.php');
-                }	
+                }
             }
 
         }
