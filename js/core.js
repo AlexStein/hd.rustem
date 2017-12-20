@@ -63,7 +63,7 @@ $(document).ready(function() {
         });
         return (result);
     }
-    
+
     $('textarea').autosize({
         append: "\n"
     });
@@ -305,7 +305,6 @@ $(document).ready(function() {
                         data: "mode=get_client_from_new_t&new_client_info="+$("#fio").val(),
                         success: function(html) {
                             $("#alert_add").hide().html(html).fadeIn(500);
-                            
                             $('#username').editable({inputclass: 'input-sm',emptytext: 'пусто'});
                             $('#new_login').editable({inputclass: 'input-sm', emptytext: 'пусто'});
                             $('#new_posada').editable({inputclass: 'input-sm posada_class',emptytext: 'пусто',mode: 'popup',showbuttons: false});

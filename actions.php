@@ -1809,16 +1809,7 @@ if (isset($_POST['mode'])) {
                         <td><small><?= $row['name']; ?></small></td>
                         <td><small><center><button id="subj_del" type="button" class="btn btn-danger btn-xs" value="<?= $row['id']; ?>">del</button></center></small></td>
                     </tr>
-<<<<<<< HEAD
                 <?php } ?>
-
-
-
-=======
-                <?php
-            }
-?>
->>>>>>> develop
                 </tbody>
             </table>
             <br>
@@ -1856,16 +1847,7 @@ if (isset($_POST['mode'])) {
                         <td><small><?= $row['name']; ?></small></td>
                         <td><small><center><button id="subj_del" type="button" class="btn btn-danger btn-xs" value="<?= $row['id']; ?>">del</button></center></small></td>
                     </tr>
-<<<<<<< HEAD
                 <?php } ?>
-
-
-
-=======
-                <?php
-            }
-?>
->>>>>>> develop
                 </tbody>
             </table>
             <br>
