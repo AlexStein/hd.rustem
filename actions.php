@@ -952,10 +952,6 @@ if (isset($_POST['mode'])) {
                     }
                     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
-
-
-
-
                     <tr id="tr_<?php
                     echo $row['id'];
 ?>" class="<?= $style ?>">
@@ -963,7 +959,7 @@ if (isset($_POST['mode'])) {
                     echo $row['id'];
 ?></center></small></td>
                         <td style=" vertical-align: middle; "><small class="<?= $muclass; ?>"><center><?= $prio ?></center></small></td>
-                        <td style=" vertical-align: middle; "><a class="<?= $muclass; ?>" data-toggle="tooltip" data-placement="bottom" title="<?= make_html($row['subj'], 'no') ?>" href="ticket?<?php
+                        <td style=" vertical-align: middle; "><a class="<?= $muclass; ?>" data-toggle="tooltip" data-placement="bottom" title="<?php cutstr_title($row['msg']); ?>" href="ticket?<?php
                     echo $row['hash_name'];
 ?>"><?php
                     cutstr(make_html($row['subj'], 'no'));
@@ -984,7 +980,6 @@ if (isset($_POST['mode'])) {
                         <td style=" vertical-align: middle; "><small><center>
                                     <?= $st; ?> </center>
                             </small></td>
-
                     </tr>
                 <?php
                 }
